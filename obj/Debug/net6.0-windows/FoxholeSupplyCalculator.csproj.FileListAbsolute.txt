@@ -1,0 +1,16 @@
+D:\FoxholeSupplyCalculator\bin\Debug\net6.0-windows\FoxholeSupplyCalculator.exe
+D:\FoxholeSupplyCalculator\bin\Debug\net6.0-windows\FoxholeSupplyCalculator.deps.json
+D:\FoxholeSupplyCalculator\bin\Debug\net6.0-windows\FoxholeSupplyCalculator.runtimeconfig.json
+D:\FoxholeSupplyCalculator\bin\Debug\net6.0-windows\FoxholeSupplyCalculator.dll
+D:\FoxholeSupplyCalculator\bin\Debug\net6.0-windows\FoxholeSupplyCalculator.pdb
+D:\FoxholeSupplyCalculator\obj\Debug\net6.0-windows\FoxholeSupplyCalculator.GeneratedMSBuildEditorConfig.editorconfig
+D:\FoxholeSupplyCalculator\obj\Debug\net6.0-windows\FoxholeSupplyCalculator.AssemblyInfoInputs.cache
+D:\FoxholeSupplyCalculator\obj\Debug\net6.0-windows\FoxholeSupplyCalculator.AssemblyInfo.cs
+D:\FoxholeSupplyCalculator\obj\Debug\net6.0-windows\FoxholeSupplyCalculator.csproj.CoreCompileInputs.cache
+D:\FoxholeSupplyCalculator\obj\Debug\net6.0-windows\FoxholeSupplyCalculator.dll
+D:\FoxholeSupplyCalculator\obj\Debug\net6.0-windows\refint\FoxholeSupplyCalculator.dll
+D:\FoxholeSupplyCalculator\obj\Debug\net6.0-windows\FoxholeSupplyCalculator.pdb
+D:\FoxholeSupplyCalculator\obj\Debug\net6.0-windows\FoxholeSupplyCalculator.genruntimeconfig.cache
+D:\FoxholeSupplyCalculator\obj\Debug\net6.0-windows\ref\FoxholeSupplyCalculator.dll
+D:\FoxholeSupplyCalculator\bin\Debug\net6.0-windows\items.json
+D:\FoxholeSupplyCalculator\bin\Debug\net6.0-windows\icon.ico

@@ -1,0 +1,102 @@
+[
+    {
+        "id": 1,
+        "name": "Booker Storm Rifle Model 838",
+        "nickname": [
+            "Штурмовая винтовка Booker Model 838",
+            "Booker",
+            "838"
+        ],
+        "resources": {
+            "Bmats": 0,
+            "Rmats": 15,
+            "Emats": 0,
+            "Hemats": 0
+        },
+        "fabric_type": "mass"
+    },
+    {
+ 	"id": 2,
+        "name": "Aalto Storm Rifle 24",
+        "nickname": [
+            "Aalto Storm Rifle 24"
+        ],
+        "resources": {
+            "Bmats": 0,
+            "Rmats": 15,
+            "Emats": 0,
+            "Hemats": 0
+        },
+        "fabric_type": "mass"
+    },
+    {
+  	"id": 3,
+        "name": "7.92mm",
+        "nickname": [
+            "7.92mm"
+        ],
+        "resources": {
+            "Bmats": 120,
+            "Rmats": 0,
+            "Emats": 0,
+            "Hemats": 0
+        },
+        "fabric_type": "mass"       
+    },
+    {
+  	"id": 4,
+        "name": "Malone MK.2",
+        "nickname": [
+            "Malone MK.2"
+        ],
+        "resources": {
+            "Bmats": 0,
+            "Rmats": 25,
+            "Emats": 0,
+            "Hemats": 0
+        },
+        "fabric_type": "mass"            
+    },
+    {
+  	"id": 5,
+        "name": "A3 Harpa Fragmentation Grenade",
+        "nickname": [
+            "A3 Harpa Fragmentation Grenade"
+        ],
+        "resources": {
+            "Bmats": 100,
+            "Rmats": 0,
+            "Emats": 40,
+            "Hemats": 0
+        },
+        "fabric_type": "mass"         
+    },
+    {
+      	"id": 6,
+        "name": "Cascadier 873",
+        "nickname": [
+            "Cascadier 873"
+        ],
+        "resources": {
+            "Bmats": 60,
+            "Rmats": 0,
+            "Emats": 0,
+            "Hemats": 0
+        },
+        "fabric_type": "mass"      
+    },
+    {
+      	"id": 7,
+        "name": "8mm",
+        "nickname": [
+            "8mm"
+        ],
+        "resources": {
+            "Bmats": 40,
+            "Rmats": 0,
+            "Emats": 0,
+            "Hemats": 0
+        },
+        "fabric_type": "mass"           
+    }
+]
