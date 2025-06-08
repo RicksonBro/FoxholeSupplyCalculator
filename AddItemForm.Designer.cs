@@ -6,9 +6,9 @@ namespace FoxholeSupplyCalculator
     partial class AddItemForm
     {
         private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.TextBox txtId, txtName, txtNicknames, txtBmats, txtRmats, txtEmats, txtHemats;
-        private System.Windows.Forms.ComboBox cmbFabric, cmbProdBranch;
-        private System.Windows.Forms.Button btnSave;
+        private TextBox txtId, txtName, txtNicknames, txtBmats, txtRmats, txtEmats, txtHemats;
+        private ComboBox cmbFabric, cmbProdBranch;
+        private Button btnSave;
 
         protected override void Dispose(bool disposing)
         {

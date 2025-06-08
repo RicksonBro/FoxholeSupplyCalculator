@@ -1,0 +1,23 @@
+Боец 1:
+   A3 Harpa Fragmentation Grenade — 9 ящ.
+   Aalto Storm Rifle 24 — 9 ящ.
+Боец 2:
+   A3 Harpa Fragmentation Grenade — 9 ящ.
+   7.92mm — 9 ящ.
+Боец 3:
+   A3 Harpa Fragmentation Grenade — 9 ящ.
+   8mm — 9 ящ.
+Боец 4:
+   A3 Harpa Fragmentation Grenade — 9 ящ.
+Боец 5:
+   A3 Harpa Fragmentation Grenade — 9 ящ.
+Боец 6:
+   A3 Harpa Fragmentation Grenade — 5 ящ. (остаток)
+Боец 7:
+   Штурмовая винтовка Booker Model 838 — 9 ящ.
+Боец 8:
+   Штурмовая винтовка Booker Model 838 — 9 ящ.
+Боец 9:
+   Aalto Storm Rifle 24 — 9 ящ.
+Боец 10:
+   Aalto Storm Rifle 24 — 9 ящ.
