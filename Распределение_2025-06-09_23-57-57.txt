@@ -1,0 +1,27 @@
+Боец 1:
+   Malone MK.2 — 9 ящ.
+   Aalto Storm Rifle 24 — 9 ящ.
+   Общая ценность: 900,00
+Боец 2:
+   Malone MK.2 — 9 ящ.
+   Aalto Storm Rifle 24 — 9 ящ.
+   Общая ценность: 900,00
+Боец 3:
+   A3 Harpa Fragmentation Grenade — 9 ящ. × 2
+   8mm — 9 ящ.
+   Общая ценность: 900,00
+Боец 4:
+   A3 Harpa Fragmentation Grenade — 9 ящ.
+   A3 Harpa Fragmentation Grenade — 5 ящ. (остаток)
+   Aalto Storm Rifle 24 — 9 ящ.
+   Общая ценность: 967,50
+Боец 5:
+   A3 Harpa Fragmentation Grenade — 9 ящ.
+   Штурмовая винтовка Booker Model 838 — 9 ящ.
+   7.92mm — 9 ящ.
+   Общая ценность: 1012,50
+Боец 6:
+   A3 Harpa Fragmentation Grenade — 9 ящ.
+   Штурмовая винтовка Booker Model 838 — 9 ящ.
+   Cascadier 873 — 9 ящ.
+   Общая ценность: 877,50

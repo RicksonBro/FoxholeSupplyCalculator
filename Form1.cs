@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Microsoft.VisualBasic;
 using System.Drawing;
 using System.Threading;
+using System.Net.Http.Json;
 
 
 namespace FoxholeSupplyCalculator
@@ -18,6 +19,9 @@ namespace FoxholeSupplyCalculator
         private List<SupplyEntry> supplyEntries = new List<SupplyEntry>();
         private int soldierCount = 10;
         private DataGridViewRow selectedRow = null;
+        private string quotaText;
+        private string quotaFilePath;
+
 
         public Form1()
         {
@@ -26,16 +30,94 @@ namespace FoxholeSupplyCalculator
             btnShowItems_Click(null, null);
         }
 
+        private int clickedColumnIndex = -1; // добавь это поле в Form1, если его еще нет
+
         private void dataGridQuotaView_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 var hit = dataGridQuotaView.HitTest(e.X, e.Y);
-                if (hit.RowIndex >= 0)
+                if (hit.RowIndex >= 0 && hit.ColumnIndex >= 0)
                 {
                     dataGridQuotaView.ClearSelection();
                     dataGridQuotaView.Rows[hit.RowIndex].Selected = true;
                     selectedRow = dataGridQuotaView.Rows[hit.RowIndex];
+                    clickedColumnIndex = hit.ColumnIndex; // сохраняем индекс колонки
+                }
+            }
+        }
+
+
+        private void ReplaceItemInQuotaText(string oldLine, string newName, int newCrates)
+        {
+            string[] lines = quotaText.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            string newLine = $"{newName} - {newCrates} ящ.";
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].Trim() == oldLine.Trim())
+                {
+                    lines[i] = newLine;
+                    break;
+                }
+            }
+
+            quotaText = string.Join("\n", lines);
+            File.WriteAllText(quotaFilePath, quotaText);
+        }
+
+
+        private void toolStripMenuItemReplace_Click(object sender, EventArgs e)
+        {
+            if (selectedRow != null)
+            {
+                // Получаем старое имя предмета из Tag
+                string oldItemName = selectedRow.Tag?.ToString();
+
+                // Находим количество ящиков из текущего supplyEntries
+                int previousCrateCount = 0;
+                var existingEntry = supplyEntries.FirstOrDefault(e => e.Name == oldItemName);
+                if (existingEntry != null)
+                {
+                    previousCrateCount = existingEntry.Quantity;
+                }
+
+                // Формируем список предметов для выбора
+                var itemQuotaList = itemDatabase.Select(item => new ItemSelectionForm.ItemQuota
+                {
+                    Name = item.name,
+                    CrateCount = previousCrateCount // <-- вот тут устанавливаем старое количество
+                }).ToList();
+
+                ItemSelectionForm selectionForm = new ItemSelectionForm(itemQuotaList);
+                if (selectionForm.ShowDialog() == DialogResult.OK)
+                {
+                    var selectedItem = selectionForm.SelectedItem;
+                    if (selectedItem != null)
+                    {
+                        // Устанавливаем выбранное количество (оно будет равно предыдущему)
+                        selectedItem.CrateCount = previousCrateCount;
+
+                        // Обновляем таблицу
+                        string newQuotaText = $"{selectedItem.Name} — {selectedItem.CrateCount} ящ.";
+                        selectedRow.Cells[0].Value = newQuotaText;
+
+                        var matched = itemDatabase.FirstOrDefault(i => i.name == selectedItem.Name);
+                        selectedRow.Cells[1].Value = matched != null ? matched.name : "❌ Не найдено";
+                        selectedRow.Cells[1].Style.ForeColor = matched != null ? Color.Black : Color.Red;
+
+                        // Обновляем Tag
+                        selectedRow.Tag = selectedItem.Name;
+
+                        // Обновляем текст квоты
+                        ReplaceItemInQuotaText($"{oldItemName} —", selectedItem.Name, selectedItem.CrateCount);
+
+                        // Обновляем запись в supplyEntries
+                        if (existingEntry != null)
+                        {
+                            existingEntry.Name = selectedItem.Name;
+                            existingEntry.Quantity = selectedItem.CrateCount;
+                        }
+                    }
                 }
             }
         }
@@ -44,11 +126,187 @@ namespace FoxholeSupplyCalculator
         {
             if (selectedRow != null)
             {
-                dataGridQuotaView.Rows.Remove(selectedRow);
-                selectedRow = null;
+                if (clickedColumnIndex == 1) // Правая колонка — удаляем только найденный предмет
+                {
+                    selectedRow.Cells[1].Value = "❌ Не найдено";
+                    selectedRow.Cells[1].Style.ForeColor = Color.Red;
+                }
+                else // Левая колонка — удаляем всю строку как раньше
+                {
+                    string itemName = selectedRow.Tag?.ToString();
+
+                    if (!string.IsNullOrWhiteSpace(itemName))
+                    {
+                        dataGridQuotaView.Rows.Remove(selectedRow);
+                        selectedRow = null;
+
+                        var entryToRemove = supplyEntries.FirstOrDefault(entry =>
+                            entry.Name != null && entry.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+
+                        if (entryToRemove != null)
+                        {
+                            supplyEntries.Remove(entryToRemove);
+                        }
+                    }
+                }
             }
         }
 
+
+        private void txtQuotaInput_TextChanged(object sender, EventArgs e)
+        {
+            string input = txtQuotaInput.Text;
+
+            // Если текст пустой — очищаем таблицу
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                dataGridQuotaView.Rows.Clear();
+                supplyEntries.Clear();
+                return;
+            }
+
+            quotaText = input; // сохраняем как текущий текст квоты
+            LoadQuotaFromText(input);
+        }
+
+
+        // private void radioFromText_CheckedChanged(object sender, EventArgs e)
+        // {
+        //     txtQuotaInput.Visible = radioFromText.Checked;
+        // }
+
+        private void LoadQuotaFromText(string text)
+        {
+            // Очистка старых данных
+            supplyEntries.Clear();
+            dataGridQuotaView.Rows.Clear();
+
+            string[] lines = text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string line in lines)
+            {
+                var match = System.Text.RegularExpressions.Regex.Match(line, @"(.+?)[\s\-–]+(\d+)\s*ящ\.?", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                if (match.Success)
+                {
+                    string name = match.Groups[1].Value.Trim();
+                    string quantityStr = match.Groups[2].Value.Trim();
+
+                    if (int.TryParse(quantityStr, out int quantity))
+                    {
+                        var entry = new SupplyEntry { Name = name, Quantity = quantity };
+                        supplyEntries.Add(entry);
+
+                        var matched = itemDatabase.FirstOrDefault(item =>
+                            item.nickname != null &&
+                            item.nickname.Any(nick =>
+                                string.Equals(nick.Trim(), name.Trim(), StringComparison.OrdinalIgnoreCase)));
+
+                        string quotaInfo = $"{name} — {quantity} ящ.";
+                        string matchedInfo = matched != null ? matched.name : "❌ Не найдено";
+
+                        int rowIndex = dataGridQuotaView.Rows.Add(quotaInfo, matchedInfo);
+                        dataGridQuotaView.Rows[rowIndex].Tag = name;
+
+                        if (matched == null)
+                        {
+                            dataGridQuotaView.Rows[rowIndex].Cells[1].Style.ForeColor = Color.Red;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // private void btnLoadQuota_Click(object sender, EventArgs e)
+        // {
+        //     if (radioFromFile.Checked)
+        //     {
+        //         // Используем существующую кнопку загрузки из файла
+        //         btnLoadFile_Click(sender, e);
+        //     }
+        //     else if (radioFromText.Checked)
+        //     {
+        //         quotaText = txtQuotaInput.Text;
+
+        //         if (string.IsNullOrWhiteSpace(quotaText))
+        //         {
+        //             MessageBox.Show("Поле ввода пустое.");
+        //             return;
+        //         }
+
+        //         // Повторим логику парсинга и отображения, как в btnLoadFile_Click
+        //         supplyEntries.Clear();
+        //         dataGridQuotaView.Rows.Clear();
+
+        //         string[] lines = quotaText.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
+        //         foreach (string line in lines)
+        //         {
+        //             var match = System.Text.RegularExpressions.Regex.Match(line, @"(.+?)[\s\-–]+(\d+)\s*ящ\.?", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        //             if (match.Success)
+        //             {
+        //                 string name = match.Groups[1].Value.Trim();
+        //                 string quantityStr = match.Groups[2].Value.Trim();
+
+        //                 if (int.TryParse(quantityStr, out int quantity))
+        //                 {
+        //                     supplyEntries.Add(new SupplyEntry { Name = name, Quantity = quantity });
+        //                 }
+        //             }
+        //         }
+
+        //         // Загрузка базы и отображение
+        //         string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\items.json"));
+        //         if (!File.Exists(path))
+        //         {
+        //             MessageBox.Show("Файл items.json не найден.");
+        //             return;
+        //         }
+
+        //         string json = File.ReadAllText(path);
+        //         var allItems = JsonSerializer.Deserialize<List<Item>>(json);
+        //         if (allItems == null) return;
+
+        //         foreach (var entry in supplyEntries)
+        //         {
+        //             var matched = allItems.FirstOrDefault(item =>
+        //                 item.nickname != null &&
+        //                 item.nickname.Any(nick =>
+        //                     string.Equals(nick.Trim(), entry.Name.Trim(), StringComparison.OrdinalIgnoreCase)));
+
+        //             string quotaInfo = $"{entry.Name} — {entry.Quantity} ящ.";
+        //             string matchedInfo = matched != null
+        //                 ? $"{matched.name}"
+        //                 : "❌ Не найдено";
+
+        //             int rowIndex = dataGridQuotaView.Rows.Add(quotaInfo, matchedInfo);
+        //             dataGridQuotaView.Rows[rowIndex].Tag = entry.Name;
+
+        //             if (matched == null)
+        //             {
+        //                 dataGridQuotaView.Rows[rowIndex].Cells[1].Style.ForeColor = Color.Red;
+        //             }
+        //         }
+
+        //         MessageBox.Show("Квота успешно загружена из текста.");
+        //     }
+        // }
+
+        private void btnPasteFromClipboard_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                string clipboardText = Clipboard.GetText();
+                txtQuotaInput.Text = clipboardText;
+                quotaText = clipboardText;
+                LoadQuotaFromText(quotaText); // функция парсинга и загрузки
+
+            }
+            else
+            {
+                MessageBox.Show("Буфер обмена не содержит текста.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
 
 
         private void LoadItemDatabase()
@@ -95,6 +353,7 @@ namespace FoxholeSupplyCalculator
                     return;
                 }
                 int count = 1;
+
                 foreach (var item in items)
                 {
                     string display = $"[{count}] {item.name} ({string.Join(", ", item.nickname)})";
@@ -178,7 +437,9 @@ namespace FoxholeSupplyCalculator
                 {
                     try
                     {
-                        string quotaText = File.ReadAllText(ofd.FileName);
+                        quotaFilePath = ofd.FileName;
+                        quotaText = File.ReadAllText(ofd.FileName);
+
 
                         // Очистка старых данных
                         supplyEntries.Clear();
@@ -229,6 +490,7 @@ namespace FoxholeSupplyCalculator
                                 : "❌ Не найдено";
 
                             int rowIndex = dataGridQuotaView.Rows.Add(quotaInfo, matchedInfo);
+                            dataGridQuotaView.Rows[rowIndex].Tag = entry.Name;
 
                             // Подсветка, если не найдено
                             if (matched == null)

@@ -1,35 +1,33 @@
 [
   {
-    "id": 1,
-    "name": "Booker Storm Rifle Model 838",
+    "id": 8,
+    "name": "adDSA",
     "nickname": [
-      "\u0428\u0442\u0443\u0440\u043C\u043E\u0432\u0430\u044F \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430 Booker Model 838",
-      "Booker",
-      "838"
+      "sdffsdf"
     ],
     "resources": {
-      "Bmats": 0,
-      "Rmats": 15,
-      "Emats": 0,
-      "Hemats": 0
+      "Bmats": 3,
+      "Rmats": 1,
+      "Emats": 2,
+      "Hemats": 3
     },
     "fabric_type": "mass",
-    "production_branch": null
+    "production_branch": "light"
   },
   {
-    "id": 2,
-    "name": "Aalto Storm Rifle 24",
+    "id": 5,
+    "name": "qwrwer",
     "nickname": [
-      "Aalto Storm Rifle 24"
+      "qwe"
     ],
     "resources": {
-      "Bmats": 0,
-      "Rmats": 15,
-      "Emats": 0,
-      "Hemats": 0
+      "Bmats": 2,
+      "Rmats": 1,
+      "Emats": 3,
+      "Hemats": 4
     },
     "fabric_type": "mass",
-    "production_branch": null
+    "production_branch": "light"
   },
   {
     "id": 3,
