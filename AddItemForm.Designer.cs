@@ -7,7 +7,7 @@ namespace FoxholeSupplyCalculator
     {
         private System.ComponentModel.IContainer components = null;
         private TextBox txtId, txtName, txtNicknames, txtBmats, txtRmats, txtEmats, txtHemats;
-        private ComboBox cmbFabric, cmbProdBranch;
+        private ComboBox cmbcraftLocation, cmbProdBranch;
         private Button btnSave;
 
         protected override void Dispose(bool disposing)
@@ -25,7 +25,7 @@ namespace FoxholeSupplyCalculator
             this.txtRmats = new TextBox();
             this.txtEmats = new TextBox();
             this.txtHemats = new TextBox();
-            this.cmbFabric = new ComboBox();
+            this.cmbcraftLocation = new ComboBox();
             this.cmbProdBranch = new ComboBox();
             this.btnSave = new Button();
 
@@ -60,13 +60,13 @@ namespace FoxholeSupplyCalculator
             this.txtHemats.PlaceholderText = "Hemats";
 
             // ComboBox
-            this.cmbFabric.Location = new System.Drawing.Point(12, 208);
-            this.cmbFabric.Items.AddRange(new string[] { "mass", "common", "recycler" });
-            this.cmbFabric.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.cmbFabric.SelectedIndex = 0;
+            this.cmbcraftLocation.Location = new System.Drawing.Point(12, 208);
+            this.cmbcraftLocation.Items.AddRange(new string[] { "mpf", "factory", "refinery" });
+            this.cmbcraftLocation.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.cmbcraftLocation.SelectedIndex = 0;
 
             this.cmbProdBranch.Location = new System.Drawing.Point(12, 236);
-            this.cmbProdBranch.Items.AddRange(new string[] { "light", "heavy", "shell", "engineering", "supply", "medicine", "uniform", "vehicle", "yard" });
+            this.cmbProdBranch.Items.AddRange(new string[] { "small_arms", "heavy_arms", "heavy_ammunition", "utilities", "medical", "supplies", "shipables", "vehicles", "uniforms" });
             this.cmbProdBranch.DropDownStyle = ComboBoxStyle.DropDownList;
             this.cmbProdBranch.SelectedIndex = 0;
 
@@ -78,7 +78,7 @@ namespace FoxholeSupplyCalculator
             // Form
             this.ClientSize = new System.Drawing.Size(250, 280);
             this.Controls.AddRange(new Control[] {
-                txtId, txtName, txtNicknames, txtBmats, txtRmats, txtEmats, txtHemats, cmbFabric, cmbProdBranch, btnSave
+                txtId, txtName, txtNicknames, txtBmats, txtRmats, txtEmats, txtHemats, cmbcraftLocation, cmbProdBranch, btnSave
             });
 
             this.Text = "Новый предмет";

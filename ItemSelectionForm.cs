@@ -30,22 +30,27 @@ public partial class ItemSelectionForm : Form
 
     private void LoadItems()
     {
+        listBox.Items.Clear();
         foreach (var item in items)
         {
-            listBox.Items.Add(item.Name);
+            listBox.Items.Add($"{item.Name} — {item.CrateCount} ящ.");
         }
     }
+
 
     private void ListBox_DoubleClick(object? sender, EventArgs e)
     {
         if (listBox.SelectedItem != null)
         {
-            string selectedName = listBox.SelectedItem.ToString();
+            string selectedLine = listBox.SelectedItem.ToString();
+            // Получаем имя до " — "
+            string selectedName = selectedLine.Split('—')[0].Trim();
             SelectedItem = items.Find(i => i.Name == selectedName);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
     }
+
 
     public class ItemQuota
     {

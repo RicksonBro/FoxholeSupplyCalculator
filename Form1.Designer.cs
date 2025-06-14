@@ -9,14 +9,17 @@ namespace FoxholeSupplyCalculator
         private System.ComponentModel.IContainer components = null;
         private Button btnLoadFile;
         private Button btnCalculate;
+        private CheckBox checkbxEdit;
+        private CheckBox checkbxShowQuota;
         private Button btnImportItems;
-        private TextBox txtSoldiers;
         private TextBox txtQuotaInput;
         private ListBox lstResults;
         private Button btnAddItem;
         private ListBox lstItems;
         private Button btnDeleteItem;
         private Button btnSaveResults;
+        private Button btnAddSubgroup;
+        private Button btnRemoveSubgroup;
 
         private TabControl tabControl;
         private TabPage tabMain;
@@ -26,12 +29,17 @@ namespace FoxholeSupplyCalculator
         private Label lblMatchedItems;
         private Label lblResults;
         private Label lblCurrentQuota;
+        private Label lblSubgroups;
+
         private DataGridView dataGridQuotaView;
         private ContextMenuStrip contextMenuGrid;
+        private ContextMenuStrip resultContextMenu;
         private ToolStripMenuItem toolStripMenuItemDelete;
         private ToolStripMenuItem replaceMenuItem;
         private Button btnPasteFromClipboard;
-
+        private FlowLayoutPanel panelSubgroups;
+        private Button btnApplySubgroupCount;
+        private NumericUpDown numericSubgroupCount;
 
 
         protected override void Dispose(bool disposing)
@@ -48,7 +56,6 @@ namespace FoxholeSupplyCalculator
         {
             btnLoadFile = new Button();
             btnCalculate = new Button();
-            txtSoldiers = new TextBox();
             txtQuotaInput = new TextBox();
             lstResults = new ListBox();
             btnAddItem = new Button();
@@ -68,17 +75,119 @@ namespace FoxholeSupplyCalculator
             toolStripMenuItemDelete = new ToolStripMenuItem("Удалить");
             replaceMenuItem = new ToolStripMenuItem("Заменить");
             btnPasteFromClipboard = new Button();
+            checkbxEdit = new CheckBox();
+            checkbxShowQuota = new CheckBox();
+            btnAddSubgroup = new Button();
+            panelSubgroups = new FlowLayoutPanel();
+            lblSubgroups = new Label();
+            btnRemoveSubgroup = new Button();
+            numericSubgroupCount = new NumericUpDown();
+            resultContextMenu = new ContextMenuStrip();
+            var moveItem = new ToolStripMenuItem("Переместить");
+            moveItem.Click += MoveItem_Click;
+            resultContextMenu.Items.Add(moveItem);
+            lstResults.MouseDown += lstResults_MouseDown;
+
+            lstResults.ContextMenuStrip = resultContextMenu;
+
+            // NumericUpDown (ввод количества)
+
+            numericSubgroupCount.Location = new Point(200, 270);
+            numericSubgroupCount.Size = new Size(50, 26);
+            numericSubgroupCount.Minimum = 1;
+            numericSubgroupCount.Maximum = 100;
+            numericSubgroupCount.Value = 1;
+            numericSubgroupCount.Name = "numericSubgroupCount";
+
+            // Кнопка "✓"
+            btnApplySubgroupCount = new Button();
+            btnApplySubgroupCount.Location = new Point(230, 300);
+            btnApplySubgroupCount.Size = new Size(60, 26);
+            btnApplySubgroupCount.Text = "Применить";
+            btnApplySubgroupCount.Name = "btnApplySubgroupCount";
+            btnApplySubgroupCount.Click += new System.EventHandler(this.btnApplySubgroupCount_Click);
+
+
+            // Текстовое поле для ввода количества подгрупп
+
+
+            // Кнопка "Применить"
+            btnApplySubgroupCount = new Button();
+            btnApplySubgroupCount.Location = new Point(230, 300);
+            btnApplySubgroupCount.Size = new Size(60, 26);
+            btnApplySubgroupCount.Name = "btnApplySubgroupCount";
+            btnApplySubgroupCount.Text = "Применить";
+            btnApplySubgroupCount.Click += new System.EventHandler(this.btnApplySubgroupCount_Click);
+
+
 
             replaceMenuItem.Click += toolStripMenuItemReplace_Click;
             contextMenuGrid.Items.Add(replaceMenuItem);
 
             toolStripMenuItemDelete.Click += toolStripMenuItemDelete_Click;
             dataGridQuotaView.MouseDown += dataGridQuotaView_MouseDown;
+            dataGridQuotaView.CellValueChanged += dataGridQuotaView_CellValueChanged;
+            // dataGridQuotaView.CurrentCellDirtyStateChanged += dataGridQuotaView_CurrentCellDirtyStateChanged;
+
 
             contextMenuGrid.Items.Add(toolStripMenuItemDelete);
 
             // radioFromText.CheckedChanged += radioFromText_CheckedChanged;
             // txtQuotaInput.Visible = false; // Скрываем по умолчанию
+            btnRemoveSubgroup.Location = new Point(10, 300);
+            btnRemoveSubgroup.Name = "btnRemoveSubgroup";
+            btnRemoveSubgroup.Size = new Size(20, 26);
+            btnRemoveSubgroup.TextAlign = ContentAlignment.MiddleCenter;
+            btnRemoveSubgroup.TabIndex = 0;
+            btnRemoveSubgroup.Text = "-";
+            btnRemoveSubgroup.UseVisualStyleBackColor = true;
+            btnRemoveSubgroup.Click += new System.EventHandler(this.btnRemoveSubgroup_Click);
+
+            lblSubgroups.AutoSize = true;
+            lblSubgroups.Location = new Point(30, 300);
+            lblSubgroups.Name = "lblSubgroups";
+            lblSubgroups.Size = new Size(125, 13);
+            lblSubgroups.TabIndex = 3;
+            lblSubgroups.Text = "Кол-во подгрупп:";
+
+            btnAddSubgroup.Location = new Point(150, 300);
+            btnAddSubgroup.Name = "btnAddSubgroup";
+            btnAddSubgroup.Size = new Size(20, 26);
+            btnAddSubgroup.TextAlign = ContentAlignment.MiddleCenter;
+            btnAddSubgroup.TabIndex = 0;
+            btnAddSubgroup.Text = "+";
+            btnAddSubgroup.UseVisualStyleBackColor = true;
+            btnAddSubgroup.Click += new System.EventHandler(this.btnAddSubgroup_Click);
+
+
+            // 
+            // panelSubgroups
+            // 
+            // this.panelSubgroups.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)
+            // | AnchorStyles.Left)
+            // | AnchorStyles.Right)));
+            panelSubgroups.AutoScroll = true;
+            panelSubgroups.FlowDirection = FlowDirection.TopDown;
+            panelSubgroups.Location = new Point(12, 320);
+            panelSubgroups.Name = "panelSubgroups";
+            panelSubgroups.Size = new Size(400, 300);
+            panelSubgroups.TabIndex = 1;
+            panelSubgroups.WrapContents = false;
+            panelSubgroups.Padding = new Padding(3);
+            panelSubgroups.BackColor = Color.WhiteSmoke;
+
+
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            // this.ClientSize = new Size(384, 440); // или больше, если нужно
+
+
+            this.Name = "Form1";
+            this.Text = "Подгруппы распределения";
+            this.ResumeLayout(false);
 
 
             btnPasteFromClipboard.Location = new Point(420, 80);
@@ -88,6 +197,18 @@ namespace FoxholeSupplyCalculator
             btnPasteFromClipboard.Text = "Вставить из буфера";
             btnPasteFromClipboard.UseVisualStyleBackColor = true;
             btnPasteFromClipboard.Click += new System.EventHandler(this.btnPasteFromClipboard_Click);
+
+            checkbxEdit.Location = new Point(200, 12);
+            checkbxEdit.Name = "checkbxEdit";
+            checkbxEdit.Checked = false;
+            checkbxEdit.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChangedEdit);
+            checkbxEdit.Enabled = true;
+
+            checkbxShowQuota.Location = new Point(200, 36);
+            checkbxShowQuota.Name = "checkbxShowQuota";
+            checkbxShowQuota.Checked = true;
+            checkbxShowQuota.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChangedQShow);
+
 
             // btnLoadQuota = new Button();
             // btnLoadQuota.Location = new Point(420, 40);
@@ -103,27 +224,49 @@ namespace FoxholeSupplyCalculator
             txtQuotaInput.ScrollBars = ScrollBars.Vertical;
             txtQuotaInput.Location = new Point(12, 70);
             txtQuotaInput.Size = new Size(300, 400);
+            txtQuotaInput.ReadOnly = true;
             txtQuotaInput.TextChanged += new System.EventHandler(this.txtQuotaInput_TextChanged);
-
-            // txtQuotaInput.TabIndex = 2;
             txtQuotaInput.Visible = true;
             //
             //dataGridQuotaView
             //
             dataGridQuotaView.AllowUserToAddRows = false;
             dataGridQuotaView.AllowUserToDeleteRows = false;
-            dataGridQuotaView.ReadOnly = true;
+            dataGridQuotaView.ReadOnly = false;
             dataGridQuotaView.RowHeadersVisible = false;
-            dataGridQuotaView.Location = new Point(12, 200);
+            dataGridQuotaView.Location = new Point(12, 250);
             dataGridQuotaView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridQuotaView.Size = new Size(570, 800);
             dataGridQuotaView.ContextMenuStrip = contextMenuGrid;
 
+
+            dataGridQuotaView.Columns.Add("Quantity", "Кол-во ящиков");
             dataGridQuotaView.Columns.Add("QuotaItem", "Лог. план");
             dataGridQuotaView.Columns.Add("MatchedItem", "База данных");
+            dataGridQuotaView.Columns.Add(new DataGridViewCheckBoxColumn()
+            {
+                HeaderText = "✔",
+                Name = "SelectColumn",
+                Width = 30,
+                ReadOnly = false,           // ВАЖНО: столбец должен быть редактируемым
+                TrueValue = true,
+                FalseValue = false,
+            });
+            dataGridQuotaView.EditMode = DataGridViewEditMode.EditOnEnter;
 
-            dataGridQuotaView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            foreach (DataGridViewColumn column in dataGridQuotaView.Columns)
+            {
+                column.ReadOnly = column.Index != 3;
+            }
+
+            dataGridQuotaView.Columns[0].ReadOnly = false;
+            dataGridQuotaView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            // dataGridQuotaView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridQuotaView.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridQuotaView.Columns[0].Width = 50;
             dataGridQuotaView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridQuotaView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridQuotaView.Columns[3].Width = 50;
             // 
             // tabControl
             // 
@@ -133,7 +276,7 @@ namespace FoxholeSupplyCalculator
             tabControl.Location = new Point(0, 0);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(600, 560);
+            tabControl.Size = new Size(600, 700);
 
             // 
             // tabMain
@@ -180,13 +323,7 @@ namespace FoxholeSupplyCalculator
 
             // 
             // txtSoldiers
-            // 
-            txtSoldiers.Location = new Point(300, 16);
-            txtSoldiers.Name = "txtSoldiers";
-            txtSoldiers.Size = new Size(120, 20);
-            txtSoldiers.TabIndex = 2;
-            // txtSoldiers.Text = "10";
-            txtSoldiers.PlaceholderText = "Количество бойцов";
+            //
 
             // 
             // lblSoldiers
@@ -257,11 +394,12 @@ namespace FoxholeSupplyCalculator
             // tabMain Controls
             // 
             tabMain.Controls.Add(btnLoadFile);
-            tabMain.Controls.Add(txtSoldiers);
             tabMain.Controls.Add(lblMatchedItems);
             tabMain.Controls.Add(dataGridQuotaView);
             tabMain.Controls.Add(txtQuotaInput);
             tabMain.Controls.Add(btnPasteFromClipboard);
+            tabMain.Controls.Add(checkbxEdit);
+            tabMain.Controls.Add(checkbxShowQuota);
 
 
             //tabDataBase Controls
@@ -276,11 +414,19 @@ namespace FoxholeSupplyCalculator
             tabCalculate.Controls.Add(btnCalculate);
             tabCalculate.Controls.Add(lstResults);
             tabCalculate.Controls.Add(btnSaveResults);
+            tabCalculate.Controls.Add(btnAddSubgroup);
+            tabCalculate.Controls.Add(btnRemoveSubgroup);
+            tabCalculate.Controls.Add(panelSubgroups);
+            tabCalculate.Controls.Add(lblSubgroups);
+            tabCalculate.Controls.Add(btnApplySubgroupCount);
+            tabCalculate.Controls.Add(btnApplySubgroupCount);
+            tabCalculate.Controls.Add(numericSubgroupCount);
+
             // 
             // Form1
             // 
-            ClientSize = new Size(600, 560);
-            Icon = new Icon("c0d15684e6c186289b50dfe083f5c562c57e8fb6.ico");
+            ClientSize = new Size(600, 700);
+            Icon = new Icon("icon.ico");
             Controls.Add(tabControl);
             Name = "Form1";
             Text = "Калькулятор для Foxhole";

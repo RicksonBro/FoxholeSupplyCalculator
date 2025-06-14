@@ -1,122 +1,107 @@
 [
   {
-    "id": 8,
-    "name": "adDSA",
-    "nickname": [
-      "sdffsdf"
-    ],
-    "resources": {
-      "Bmats": 3,
-      "Rmats": 1,
-      "Emats": 2,
-      "Hemats": 3
-    },
-    "fabric_type": "mass",
-    "production_branch": "light"
-  },
-  {
-    "id": 5,
-    "name": "qwrwer",
-    "nickname": [
-      "qwe"
-    ],
-    "resources": {
-      "Bmats": 2,
-      "Rmats": 1,
-      "Emats": 3,
-      "Hemats": 4
-    },
-    "fabric_type": "mass",
-    "production_branch": "light"
-  },
-  {
-    "id": 3,
+    "id": 1,
     "name": "7.92mm",
     "nickname": [
       "7.92mm"
     ],
     "resources": {
       "Bmats": 120,
-      "Rmats": 0,
-      "Emats": 0,
-      "Hemats": 0
+      "Rmats": null,
+      "Emats": null,
+      "Hemats": null
     },
-    "fabric_type": "mass",
+    "craftLocation": "mpf",
     "production_branch": null
   },
   {
-    "id": 4,
+    "id": 2,
     "name": "Malone MK.2",
     "nickname": [
       "Malone MK.2"
     ],
     "resources": {
-      "Bmats": 0,
+      "Bmats": null,
       "Rmats": 25,
-      "Emats": 0,
-      "Hemats": 0
+      "Emats": null,
+      "Hemats": null
     },
-    "fabric_type": "mass",
+    "craftLocation": "mpf",
     "production_branch": null
   },
   {
-    "id": 5,
+    "id": 3,
     "name": "A3 Harpa Fragmentation Grenade",
     "nickname": [
       "A3 Harpa Fragmentation Grenade"
     ],
     "resources": {
       "Bmats": 100,
-      "Rmats": 0,
+      "Rmats": null,
       "Emats": 40,
-      "Hemats": 0
+      "Hemats": null
     },
-    "fabric_type": "mass",
+    "craftLocation": "mpf",
     "production_branch": null
   },
   {
-    "id": 6,
+    "id": 4,
     "name": "Cascadier 873",
     "nickname": [
       "Cascadier 873"
     ],
     "resources": {
       "Bmats": 60,
-      "Rmats": 0,
-      "Emats": 0,
-      "Hemats": 0
+      "Rmats": null,
+      "Emats": null,
+      "Hemats": null
     },
-    "fabric_type": "mass",
+    "craftLocation": "mpf",
     "production_branch": null
   },
   {
-    "id": 7,
+    "id": 5,
     "name": "8mm",
     "nickname": [
       "8mm"
     ],
     "resources": {
       "Bmats": 40,
-      "Rmats": 0,
-      "Emats": 0,
-      "Hemats": 0
+      "Rmats": null,
+      "Emats": null,
+      "Hemats": null
     },
-    "fabric_type": "mass",
+    "craftLocation": "mpf",
     "production_branch": null
   },
   {
-    "id": 8,
-    "name": "asfdasdf",
+    "id": 6,
+    "name": "sdf",
     "nickname": [
-      "fff"
+      "f"
     ],
     "resources": {
-      "Bmats": 3,
-      "Rmats": 3,
-      "Emats": 2,
-      "Hemats": 1
+      "Bmats": 0,
+      "Rmats": 5,
+      "Emats": 0,
+      "Hemats": 0
     },
-    "fabric_type": "mass",
-    "production_branch": "engineering"
+    "craftLocation": "factory",
+    "production_branch": "heavy_ammunition"
+  },
+  {
+    "id": 7,
+    "name": "\u0428\u0442\u0443\u0440\u043C\u043E\u0432\u0430\u044F \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430 Booker Model 838",
+    "nickname": [
+      "\u0428\u0442\u0443\u0440\u043C\u043E\u0432\u0430\u044F \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430 Booker Model 838"
+    ],
+    "resources": {
+      "Bmats": 0,
+      "Rmats": 0,
+      "Emats": 20,
+      "Hemats": 0
+    },
+    "craftLocation": "mpf",
+    "production_branch": "heavy_arms"
   }
 ]
