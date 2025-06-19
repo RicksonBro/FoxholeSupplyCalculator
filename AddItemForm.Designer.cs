@@ -6,8 +6,9 @@ namespace FoxholeSupplyCalculator
     partial class AddItemForm
     {
         private System.ComponentModel.IContainer components = null;
-        private TextBox txtId, txtName, txtNicknames, txtBmats, txtRmats, txtEmats, txtHemats;
-        private ComboBox cmbcraftLocation, cmbProdBranch;
+        private TextBox txtName, txtNicknames, txtBmats, txtRmats, txtEmats, txtHemats;
+        private ComboBox cmbProdBranch;
+        private CheckedListBox lstCraftLocations;
         private Button btnSave;
 
         protected override void Dispose(bool disposing)
@@ -18,22 +19,22 @@ namespace FoxholeSupplyCalculator
 
         private void InitializeComponent()
         {
-            this.txtId = new TextBox();
+            // this.txtId = new TextBox();
             this.txtName = new TextBox();
             this.txtNicknames = new TextBox();
             this.txtBmats = new TextBox();
             this.txtRmats = new TextBox();
             this.txtEmats = new TextBox();
             this.txtHemats = new TextBox();
-            this.cmbcraftLocation = new ComboBox();
+            this.lstCraftLocations = new CheckedListBox();
             this.cmbProdBranch = new ComboBox();
             this.btnSave = new Button();
 
             this.SuspendLayout();
 
             // ID
-            this.txtId.Location = new System.Drawing.Point(12, 12);
-            this.txtId.PlaceholderText = "ID";
+            // this.txtId.Location = new System.Drawing.Point(12, 12);
+            // this.txtId.PlaceholderText = "ID";
 
             // Name
             this.txtName.Location = new System.Drawing.Point(12, 40);
@@ -59,26 +60,26 @@ namespace FoxholeSupplyCalculator
             this.txtHemats.Location = new System.Drawing.Point(12, 180);
             this.txtHemats.PlaceholderText = "Hemats";
 
-            // ComboBox
-            this.cmbcraftLocation.Location = new System.Drawing.Point(12, 208);
-            this.cmbcraftLocation.Items.AddRange(new string[] { "mpf", "factory", "refinery" });
-            this.cmbcraftLocation.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.cmbcraftLocation.SelectedIndex = 0;
+            // CheckBoxList
+            this.lstCraftLocations.Location = new System.Drawing.Point(12, 208);
+            this.lstCraftLocations.Size = new System.Drawing.Size(160, 64);
+            this.lstCraftLocations.Items.AddRange(new object[] { "mpf", "factory", "refinery" });
+            this.lstCraftLocations.CheckOnClick = true;
 
-            this.cmbProdBranch.Location = new System.Drawing.Point(12, 236);
+            this.cmbProdBranch.Location = new System.Drawing.Point(12, 270);
             this.cmbProdBranch.Items.AddRange(new string[] { "small_arms", "heavy_arms", "heavy_ammunition", "utilities", "medical", "supplies", "shipables", "vehicles", "uniforms" });
             this.cmbProdBranch.DropDownStyle = ComboBoxStyle.DropDownList;
             this.cmbProdBranch.SelectedIndex = 0;
 
             // Save button
-            this.btnSave.Location = new System.Drawing.Point(12, 260);
+            this.btnSave.Location = new System.Drawing.Point(12, 300);
             this.btnSave.Text = "Сохранить";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 
             // Form
-            this.ClientSize = new System.Drawing.Size(250, 280);
+            this.ClientSize = new System.Drawing.Size(250, 350);
             this.Controls.AddRange(new Control[] {
-                txtId, txtName, txtNicknames, txtBmats, txtRmats, txtEmats, txtHemats, cmbcraftLocation, cmbProdBranch, btnSave
+                txtName, txtNicknames, txtBmats, txtRmats, txtEmats, txtHemats, lstCraftLocations, cmbProdBranch, btnSave
             });
 
             this.Text = "Новый предмет";

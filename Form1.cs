@@ -26,6 +26,8 @@ namespace FoxholeSupplyCalculator
         private int subgroupCounter = 0;
         private List<TextBox> subgroupTextBoxes = new List<TextBox>();
         private bool isUpdatingPlaceholders = false;
+        private List<Item> currentItems = new();
+
 
 
         public Form1()
@@ -181,9 +183,9 @@ namespace FoxholeSupplyCalculator
 
             var subgroupPanel = new Panel
             {
-                Height = 25,
+                Height = 28,
                 Width = panelSubgroups.ClientSize.Width - 25,
-                Margin = new Padding(2),
+                Margin = new Padding(1),
                 BackColor = Color.Transparent
             };
 
@@ -331,7 +333,6 @@ namespace FoxholeSupplyCalculator
             OnSubgroupTextChanged(null, null);
         }
 
-
         private void checkBox_CheckedChangedEdit(object sender, EventArgs e)
         {
             txtQuotaInput.ReadOnly = checkbxEdit.Checked == true ? false : true;
@@ -471,7 +472,7 @@ namespace FoxholeSupplyCalculator
                 // Формируем список предметов для выбора
                 var itemQuotaList = itemDatabase.Select(item => new ItemSelectionForm.ItemQuota
                 {
-                    Name = item.name,
+                    Name = item.itemName,
                     CrateCount = previousCrateCount // <-- вот тут устанавливаем старое количество
                 }).ToList();
 
@@ -488,8 +489,8 @@ namespace FoxholeSupplyCalculator
                         string newQuotaText = $"{selectedItem.Name}";
                         selectedRow.Cells[1].Value = newQuotaText;
 
-                        var matched = itemDatabase.FirstOrDefault(i => i.name == selectedItem.Name);
-                        selectedRow.Cells[2].Value = matched != null ? matched.name : "❌ Не найдено";
+                        var matched = itemDatabase.FirstOrDefault(i => i.itemName == selectedItem.Name);
+                        selectedRow.Cells[2].Value = matched != null ? matched.itemName : "❌ Не найдено";
                         selectedRow.Cells[2].Style.ForeColor = matched != null ? Color.Black : Color.Red;
 
                         // Обновляем Tag
@@ -565,6 +566,7 @@ namespace FoxholeSupplyCalculator
 
             foreach (string line in lines)
             {
+                line.Replace("–", "-");
                 var match = Regex.Match(line, @"(\d+)\s*ящ\.?\s*[-–]\s*(.+)", RegexOptions.IgnoreCase);
                 if (match.Success)
                 {
@@ -582,21 +584,54 @@ namespace FoxholeSupplyCalculator
                                 string.Equals(nick.Trim(), name.Trim(), StringComparison.OrdinalIgnoreCase)));
 
                         string quotaInfo = $"{name}";
-                        string matchedInfo = matched != null ? matched.name : "❌ Не найдено";
-
-                        int rowIndex = dataGridQuotaView.Rows.Add(quantity, quotaInfo, matchedInfo, false);
-
-                        dataGridQuotaView.Rows[rowIndex].Tag = name;
-
-                        if (matched == null)
+                        string matchedInfo = matched != null ? matched.itemName : "❌ Не найдено";
+                        try
                         {
-                            dataGridQuotaView.Rows[rowIndex].Cells[2].Style.ForeColor = Color.Red;
+                            bool? showCheckbox = matched.craftLocation?.Contains("refinery") == true ? false : (bool?)null;
+
+                            int rowIndex = dataGridQuotaView.Rows.Add(quantity, quotaInfo, matchedInfo, showCheckbox);
+
+                            dataGridQuotaView.Rows[rowIndex].Tag = name;
+
+                            if (matched == null)
+                            {
+                                dataGridQuotaView.Rows[rowIndex].Cells[2].Style.ForeColor = Color.Red;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Ошибка: ", ex);
                         }
                     }
                 }
             }
-
         }
+        private void dataGridQuotaView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.ColumnIndex == dataGridQuotaView.Columns["SelectColumn"].Index && e.RowIndex >= 0)
+            {
+                var cellValue = dataGridQuotaView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                if (cellValue == null || cellValue == DBNull.Value)
+                {
+                    e.PaintBackground(e.CellBounds, true); // только фон
+                    e.Handled = true; // отменить отрисовку чекбокса
+                }
+            }
+        }
+
+
+        private void dataGridQuotaView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (dataGridQuotaView.Columns[e.ColumnIndex].Name == "SelectColumn")
+            {
+                var value = dataGridQuotaView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                if (value == null || value == DBNull.Value)
+                {
+                    e.Cancel = true; // запрещаем редактировать ячейку
+                }
+            }
+        }
+
 
         private void btnPasteFromClipboard_Click(object sender, EventArgs e)
         {
@@ -670,27 +705,47 @@ namespace FoxholeSupplyCalculator
                 }
 
                 string json = File.ReadAllText(path);
-                var items = JsonSerializer.Deserialize<List<Item>>(json);
+                currentItems = JsonSerializer.Deserialize<List<Item>>(json) ?? new List<Item>();
 
-                if (items == null || items.Count == 0)
+                if (currentItems.Count == 0)
                 {
                     MessageBox.Show("Нет предметов в базе.");
                     return;
                 }
-                int count = 1;
 
-                foreach (var item in items)
-                {
-                    string display = $"[{count}] {item.name} ({string.Join(", ", item.nickname)})";
-                    count++;
-                    lstItems.Items.Add(display);
-                }
+                DisplayFilteredItems(""); // Показать всё изначально
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка при загрузке предметов: " + ex.Message);
             }
         }
+
+        private void DisplayFilteredItems(string filter)
+        {
+            lstItems.Items.Clear();
+
+            int count = 1;
+            foreach (var item in currentItems)
+            {
+                string name = item.itemName?.ToLower() ?? "";
+                string nicks = string.Join(", ", item.nickname ?? new List<string>()).ToLower();
+                string full = name + " " + nicks;
+
+                if (full.Contains(filter.ToLower()))
+                {
+                    lstItems.Items.Add($"[{count}] {item.itemName} ({string.Join(", ", item.nickname ?? new List<string>())})");
+                }
+
+                count++;
+            }
+        }
+
+        private void txtSearchDB_TextChanged(object sender, EventArgs e)
+        {
+            DisplayFilteredItems(txtSearchDB.Text);
+        }
+
 
         private void btnDeleteItem_Click(object sender, EventArgs e)
         {
@@ -702,21 +757,17 @@ namespace FoxholeSupplyCalculator
 
             string selected = lstItems.SelectedItem.ToString();
 
-            // Пытаемся получить ID из начала строки
-            int idStart = selected.IndexOf('[') + 1;
-            int idEnd = selected.IndexOf(']');
-            if (idStart < 0 || idEnd < 0 || idEnd <= idStart)
+            // Извлекаем имя между "]" и "("
+            int endOfId = selected.IndexOf("]") + 1;
+            int startOfNicks = selected.LastIndexOf("(");
+
+            if (endOfId <= 0 || startOfNicks == -1 || startOfNicks <= endOfId)
             {
-                MessageBox.Show("Не удалось определить ID предмета.");
+                MessageBox.Show("Не удалось извлечь имя предмета.");
                 return;
             }
 
-            string idStr = selected.Substring(idStart, idEnd - idStart);
-            if (!int.TryParse(idStr, out int id))
-            {
-                MessageBox.Show("Неверный ID.");
-                return;
-            }
+            string namePart = selected.Substring(endOfId, startOfNicks - endOfId).Trim();
 
             string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\items.json"));
             if (!File.Exists(path))
@@ -730,7 +781,11 @@ namespace FoxholeSupplyCalculator
                 string json = File.ReadAllText(path);
                 var items = JsonSerializer.Deserialize<List<Item>>(json);
 
-                var itemToRemove = items.FirstOrDefault(i => i.id == id);
+                var itemToRemove = items.FirstOrDefault(i =>
+                    string.Equals(i.itemName, namePart, StringComparison.OrdinalIgnoreCase) ||
+                    (i.nickname != null && i.nickname.Any(nick =>
+                        string.Equals(nick.Trim(), namePart, StringComparison.OrdinalIgnoreCase))));
+
                 if (itemToRemove != null)
                 {
                     items.Remove(itemToRemove);
@@ -739,11 +794,11 @@ namespace FoxholeSupplyCalculator
                     File.WriteAllText(path, updatedJson);
 
                     MessageBox.Show("Предмет удалён.");
-                    btnShowItems_Click(null, null); // Перезагрузим список
+                    btnShowItems_Click(null, null); // Обновить список
                 }
                 else
                 {
-                    MessageBox.Show("Предмет не найден.");
+                    MessageBox.Show("Предмет не найден по имени или никнейму.");
                 }
             }
             catch (Exception ex)
@@ -751,6 +806,8 @@ namespace FoxholeSupplyCalculator
                 MessageBox.Show("Ошибка удаления: " + ex.Message);
             }
         }
+
+
 
         private void btnLoadFile_Click(object sender, EventArgs e)
         {
@@ -802,9 +859,6 @@ namespace FoxholeSupplyCalculator
         }
 
 
-
-
-
         private void ImportItemDatabase(string importPath)
         {
             if (!File.Exists(importPath))
@@ -815,55 +869,98 @@ namespace FoxholeSupplyCalculator
 
             try
             {
-                // Загружаем импортируемые предметы
                 string importJson = File.ReadAllText(importPath);
-                var importedItems = JsonSerializer.Deserialize<List<Item>>(importJson);
+                var parsedJson = JsonDocument.Parse(importJson);
 
-                if (importedItems == null || importedItems.Count == 0)
+                if (parsedJson.RootElement.ValueKind != JsonValueKind.Array)
                 {
-                    MessageBox.Show("Импортируемый файл не содержит предметов.");
+                    MessageBox.Show("Импортируемый JSON должен быть массивом объектов.");
                     return;
                 }
 
-                // Загружаем текущие предметы
+                var validItems = new List<Item>();
+
+                foreach (var element in parsedJson.RootElement.EnumerateArray())
+                {
+                    try
+                    {
+                        string itemName = element.GetProperty("itemName").GetString() ?? "";
+                        string[]? craftLocations = element.TryGetProperty("craftLocation", out var locs) && locs.ValueKind == JsonValueKind.Array
+                            ? locs.EnumerateArray().Select(l => l.GetString() ?? "").Where(s => !string.IsNullOrWhiteSpace(s)).ToArray()
+                            : null;
+
+                        List<string> nicknames = new() { itemName };
+
+                        Cost cost = new Cost
+                        {
+                            bmat = element.GetProperty("cost").TryGetProperty("bmat", out var bmat) && bmat.ValueKind == JsonValueKind.Number ? bmat.GetInt32() : 0,
+                            rmat = element.GetProperty("cost").TryGetProperty("rmat", out var rmat) && rmat.ValueKind == JsonValueKind.Number ? rmat.GetInt32() : 0,
+                            emat = element.GetProperty("cost").TryGetProperty("emat", out var emat) && emat.ValueKind == JsonValueKind.Number ? emat.GetInt32() : 0,
+                            hemat = element.GetProperty("cost").TryGetProperty("hemat", out var hemat) && hemat.ValueKind == JsonValueKind.Number ? hemat.GetInt32() : 0,
+                        };
+
+                        string category = element.TryGetProperty("itemCategory", out var cat) ? cat.GetString() : null;
+
+                        var item = new Item
+                        {
+                            itemName = itemName,
+                            nickname = nicknames,
+                            craftLocation = craftLocations,
+                            itemCategory = category,
+                            cost = cost
+                        };
+
+                        validItems.Add(item);
+                    }
+                    catch
+                    {
+                        // Игнорируем ошибочные элементы
+                        continue;
+                    }
+                }
+
+                if (validItems.Count == 0)
+                {
+                    MessageBox.Show("Не удалось извлечь ни одного предмета из файла.");
+                    return;
+                }
+
+                // Загрузка текущей базы
                 string jsonPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\items.json"));
                 var currentItems = File.Exists(jsonPath)
                     ? JsonSerializer.Deserialize<List<Item>>(File.ReadAllText(jsonPath)) ?? new List<Item>()
                     : new List<Item>();
 
-                int replacedCount = 0;
-                int addedCount = 0;
+                int replaced = 0, added = 0;
 
-                foreach (var imported in importedItems)
+                foreach (var imported in validItems)
                 {
-                    var existing = currentItems.FirstOrDefault(i => i.name == imported.name);
+                    var existing = currentItems.FirstOrDefault(i => i.itemName == imported.itemName);
                     if (existing != null)
                     {
-                        // Заменяем существующий предмет
                         currentItems.Remove(existing);
                         currentItems.Add(imported);
-                        replacedCount++;
+                        replaced++;
                     }
                     else
                     {
-                        // Добавляем новый
                         currentItems.Add(imported);
-                        addedCount++;
+                        added++;
                     }
                 }
 
-                // Сохраняем обновлённую базу
                 File.WriteAllText(jsonPath, JsonSerializer.Serialize(currentItems, new JsonSerializerOptions { WriteIndented = true }));
 
-                MessageBox.Show($"Импорт завершён.\nЗаменено: {replacedCount}, добавлено новых: {addedCount}.");
+                MessageBox.Show($"Импорт завершён.\nЗаменено: {replaced}, добавлено новых: {added}.");
                 LoadItemDatabase();
-                btnShowItems_Click(null, null); // Обновить отображение
+                btnShowItems_Click(null, null);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Ошибка при импорте базы данных: " + ex.Message);
             }
         }
+
 
         private void btnImportItems_Click(object sender, EventArgs e)
         {
@@ -959,13 +1056,13 @@ namespace FoxholeSupplyCalculator
                     item.nickname != null &&
                     item.nickname.Any(nick => entry.Name.Contains(nick, StringComparison.OrdinalIgnoreCase)));
 
-                if (matchedItem == null || matchedItem.resources == null)
+                if (matchedItem == null || matchedItem.cost == null)
                     continue;
 
-                int bmats = matchedItem.resources.Bmats ?? 0;
-                int rmats = matchedItem.resources.Rmats ?? 0;
-                int emats = matchedItem.resources.Emats ?? 0;
-                int hemats = matchedItem.resources.Hemats ?? 0;
+                int bmats = matchedItem.cost.bmat ?? 0;
+                int rmats = matchedItem.cost.rmat ?? 0;
+                int emats = matchedItem.cost.emat ?? 0;
+                int hemats = matchedItem.cost.hemat ?? 0;
 
                 int total = (bmats * BMAT_C) +
                             (rmats * RMAT_C) +
@@ -974,7 +1071,15 @@ namespace FoxholeSupplyCalculator
 
                 double valuePerUnit = total / 4.0;
                 double totalValue = valuePerUnit * entry.Quantity;
-                int recommendedCrates = GetRecommendedCrateCount(matchedItem.craftLocation);
+                int recommendedCrates;
+                if (matchedItem.craftLocation.Any("mpf".Contains))
+                {
+                    recommendedCrates = GetRecommendedCrateCount("mpf");
+                }
+                else
+                {
+                    recommendedCrates = GetRecommendedCrateCount(matchedItem.craftLocation[0]);
+                }
 
                 valuedEntries.Add(new ValuedEntry
                 {
@@ -1119,20 +1224,19 @@ namespace FoxholeSupplyCalculator
 
     public class Item
     {
-        public int id { get; set; }
-        public string? name { get; set; }
+        public string? itemName { get; set; }
         public List<string>? nickname { get; set; }
-        public Resources? resources { get; set; }
-        public string? craftLocation { get; set; }
-        public string? production_branch { get; set; }
+        public Cost? cost { get; set; }
+        public string?[] craftLocation { get; set; }
+        public string? itemCategory { get; set; }
     }
 
-    public class Resources
+    public class Cost
     {
-        public int? Bmats { get; set; }
-        public int? Rmats { get; set; }
-        public int? Emats { get; set; }
-        public int? Hemats { get; set; }
+        public int? bmat { get; set; }
+        public int? rmat { get; set; }
+        public int? emat { get; set; }
+        public int? hemat { get; set; }
     }
 
     public class SupplyEntry

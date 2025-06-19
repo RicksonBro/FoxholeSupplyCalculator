@@ -13,6 +13,7 @@ namespace FoxholeSupplyCalculator
         private CheckBox checkbxShowQuota;
         private Button btnImportItems;
         private TextBox txtQuotaInput;
+        private TextBox txtSearchDB;
         private ListBox lstResults;
         private Button btnAddItem;
         private ListBox lstItems;
@@ -83,6 +84,7 @@ namespace FoxholeSupplyCalculator
             btnRemoveSubgroup = new Button();
             numericSubgroupCount = new NumericUpDown();
             resultContextMenu = new ContextMenuStrip();
+            txtSearchDB = new TextBox();
             var moveItem = new ToolStripMenuItem("Переместить");
             moveItem.Click += MoveItem_Click;
             resultContextMenu.Items.Add(moveItem);
@@ -92,20 +94,26 @@ namespace FoxholeSupplyCalculator
 
             // NumericUpDown (ввод количества)
 
-            numericSubgroupCount.Location = new Point(200, 270);
+            txtSearchDB.Location = new Point(12, 50);
+            txtSearchDB.Size = new Size(400, 30);
+            txtSearchDB.PlaceholderText = "🔍Поиск";
+            txtSearchDB.TextChanged += new System.EventHandler(this.txtSearchDB_TextChanged);
+
+
+            numericSubgroupCount.Location = new Point(170, 302);
             numericSubgroupCount.Size = new Size(50, 26);
             numericSubgroupCount.Minimum = 1;
             numericSubgroupCount.Maximum = 100;
             numericSubgroupCount.Value = 1;
             numericSubgroupCount.Name = "numericSubgroupCount";
 
-            // Кнопка "✓"
-            btnApplySubgroupCount = new Button();
-            btnApplySubgroupCount.Location = new Point(230, 300);
-            btnApplySubgroupCount.Size = new Size(60, 26);
-            btnApplySubgroupCount.Text = "Применить";
-            btnApplySubgroupCount.Name = "btnApplySubgroupCount";
-            btnApplySubgroupCount.Click += new System.EventHandler(this.btnApplySubgroupCount_Click);
+            // // Кнопка "✓"
+            // btnApplySubgroupCount = new Button();
+            // btnApplySubgroupCount.Location = new Point(230, 300);
+            // btnApplySubgroupCount.Size = new Size(80, 26);
+            // btnApplySubgroupCount.Text = "Применить";
+            // btnApplySubgroupCount.Name = "btnApplySubgroupCount";
+            // btnApplySubgroupCount.Click += new System.EventHandler(this.btnApplySubgroupCount_Click);
 
 
             // Текстовое поле для ввода количества подгрупп
@@ -114,7 +122,7 @@ namespace FoxholeSupplyCalculator
             // Кнопка "Применить"
             btnApplySubgroupCount = new Button();
             btnApplySubgroupCount.Location = new Point(230, 300);
-            btnApplySubgroupCount.Size = new Size(60, 26);
+            btnApplySubgroupCount.Size = new Size(80, 26);
             btnApplySubgroupCount.Name = "btnApplySubgroupCount";
             btnApplySubgroupCount.Text = "Применить";
             btnApplySubgroupCount.Click += new System.EventHandler(this.btnApplySubgroupCount_Click);
@@ -144,13 +152,13 @@ namespace FoxholeSupplyCalculator
             btnRemoveSubgroup.Click += new System.EventHandler(this.btnRemoveSubgroup_Click);
 
             lblSubgroups.AutoSize = true;
-            lblSubgroups.Location = new Point(30, 300);
+            lblSubgroups.Location = new Point(30, 305);
             lblSubgroups.Name = "lblSubgroups";
             lblSubgroups.Size = new Size(125, 13);
             lblSubgroups.TabIndex = 3;
             lblSubgroups.Text = "Кол-во подгрупп:";
 
-            btnAddSubgroup.Location = new Point(150, 300);
+            btnAddSubgroup.Location = new Point(130, 300);
             btnAddSubgroup.Name = "btnAddSubgroup";
             btnAddSubgroup.Size = new Size(20, 26);
             btnAddSubgroup.TextAlign = ContentAlignment.MiddleCenter;
@@ -158,7 +166,6 @@ namespace FoxholeSupplyCalculator
             btnAddSubgroup.Text = "+";
             btnAddSubgroup.UseVisualStyleBackColor = true;
             btnAddSubgroup.Click += new System.EventHandler(this.btnAddSubgroup_Click);
-
 
             // 
             // panelSubgroups
@@ -168,7 +175,7 @@ namespace FoxholeSupplyCalculator
             // | AnchorStyles.Right)));
             panelSubgroups.AutoScroll = true;
             panelSubgroups.FlowDirection = FlowDirection.TopDown;
-            panelSubgroups.Location = new Point(12, 320);
+            panelSubgroups.Location = new Point(12, 330);
             panelSubgroups.Name = "panelSubgroups";
             panelSubgroups.Size = new Size(400, 300);
             panelSubgroups.TabIndex = 1;
@@ -223,7 +230,7 @@ namespace FoxholeSupplyCalculator
             txtQuotaInput.Multiline = true;
             txtQuotaInput.ScrollBars = ScrollBars.Vertical;
             txtQuotaInput.Location = new Point(12, 70);
-            txtQuotaInput.Size = new Size(300, 400);
+            txtQuotaInput.Size = new Size(400, 200);
             txtQuotaInput.ReadOnly = true;
             txtQuotaInput.TextChanged += new System.EventHandler(this.txtQuotaInput_TextChanged);
             txtQuotaInput.Visible = true;
@@ -267,6 +274,11 @@ namespace FoxholeSupplyCalculator
             dataGridQuotaView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridQuotaView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridQuotaView.Columns[3].Width = 50;
+
+            dataGridQuotaView.CellPainting += dataGridQuotaView_CellPainting;
+            dataGridQuotaView.CellBeginEdit += dataGridQuotaView_CellBeginEdit;
+
+
             // 
             // tabControl
             // 
@@ -358,7 +370,7 @@ namespace FoxholeSupplyCalculator
             // btnImportItems
             btnImportItems.Location = new Point(350, 12);
             btnImportItems.Name = "btnImportItems";
-            btnImportItems.Size = new Size(120, 50);
+            btnImportItems.Size = new Size(200, 30);
             btnImportItems.Text = "Импортировать базу данных";
             btnImportItems.Click += new System.EventHandler(btnImportItems_Click);
             // 
@@ -407,6 +419,7 @@ namespace FoxholeSupplyCalculator
             tabDataBase.Controls.Add(btnAddItem);
             tabDataBase.Controls.Add(btnDeleteItem);
             tabDataBase.Controls.Add(btnImportItems);
+            tabDataBase.Controls.Add(txtSearchDB);
             tabDataBase.Controls.Add(lstItems);
 
             //tabCalculate Controls

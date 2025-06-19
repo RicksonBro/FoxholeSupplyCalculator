@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Windows.Forms;
 
@@ -19,17 +20,16 @@ namespace FoxholeSupplyCalculator
             {
                 var newItem = new Item
                 {
-                    id = int.Parse(txtId.Text),
-                    name = txtName.Text,
+                    itemName = txtName.Text,
                     nickname = new List<string>(txtNicknames.Text.Split(',', StringSplitOptions.RemoveEmptyEntries)),
-                    craftLocation = cmbcraftLocation.Text,
-                    production_branch = cmbProdBranch.Text,
-                    resources = new Resources
+                    craftLocation = lstCraftLocations.CheckedItems.Cast<object>().Select(item => item.ToString()).ToArray(),
+                    itemCategory = cmbProdBranch.Text,
+                    cost = new Cost
                     {
-                        Bmats = int.Parse(txtBmats.Text == "" ? "0" : txtBmats.Text),
-                        Rmats = int.Parse(txtRmats.Text == "" ? "0" : txtRmats.Text),
-                        Emats = int.Parse(txtEmats.Text == "" ? "0" : txtEmats.Text),
-                        Hemats = int.Parse(txtHemats.Text == "" ? "0" : txtHemats.Text)
+                        bmat = int.Parse(txtBmats.Text == "" ? "0" : txtBmats.Text),
+                        rmat = int.Parse(txtRmats.Text == "" ? "0" : txtRmats.Text),
+                        emat = int.Parse(txtEmats.Text == "" ? "0" : txtEmats.Text),
+                        hemat = int.Parse(txtHemats.Text == "" ? "0" : txtHemats.Text)
                     }
                 };
 
