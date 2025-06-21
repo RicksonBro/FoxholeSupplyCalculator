@@ -9,6 +9,7 @@ namespace FoxholeSupplyCalculator
         private System.ComponentModel.IContainer components = null;
         private Button btnLoadFile;
         private Button btnCalculate;
+        private Button btnDarkMode;
         private CheckBox checkbxEdit;
         private CheckBox checkbxShowQuota;
         private Button btnImportItems;
@@ -21,6 +22,7 @@ namespace FoxholeSupplyCalculator
         private Button btnSaveResults;
         private Button btnAddSubgroup;
         private Button btnRemoveSubgroup;
+        private Button copyResultsFromClipboard;
 
         private TabControl tabControl;
         private TabPage tabMain;
@@ -57,6 +59,7 @@ namespace FoxholeSupplyCalculator
         {
             btnLoadFile = new Button();
             btnCalculate = new Button();
+            btnDarkMode = new Button();
             txtQuotaInput = new TextBox();
             lstResults = new ListBox();
             btnAddItem = new Button();
@@ -86,6 +89,7 @@ namespace FoxholeSupplyCalculator
             resultContextMenu = new ContextMenuStrip();
             txtSearchDB = new TextBox();
             var moveItem = new ToolStripMenuItem("Переместить");
+            copyResultsFromClipboard = new Button();
             moveItem.Click += MoveItem_Click;
             resultContextMenu.Items.Add(moveItem);
             lstResults.MouseDown += lstResults_MouseDown;
@@ -93,6 +97,13 @@ namespace FoxholeSupplyCalculator
             lstResults.ContextMenuStrip = resultContextMenu;
 
             // NumericUpDown (ввод количества)
+            btnDarkMode.Size = new Size(40, 40);
+            btnDarkMode.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnDarkMode.Name = "btnDarkMode";
+            btnDarkMode.Click += new System.EventHandler(this.btnDarkMode_Click);
+            btnDarkMode.ImageAlign = ContentAlignment.MiddleCenter;
+            btnDarkMode.Text = "";
+            btnDarkMode.Image = Image.FromFile("moon-icon.png");
 
             txtSearchDB.Location = new Point(12, 50);
             txtSearchDB.Size = new Size(400, 30);
@@ -107,14 +118,11 @@ namespace FoxholeSupplyCalculator
             numericSubgroupCount.Value = 1;
             numericSubgroupCount.Name = "numericSubgroupCount";
 
-            // // Кнопка "✓"
-            // btnApplySubgroupCount = new Button();
-            // btnApplySubgroupCount.Location = new Point(230, 300);
-            // btnApplySubgroupCount.Size = new Size(80, 26);
-            // btnApplySubgroupCount.Text = "Применить";
-            // btnApplySubgroupCount.Name = "btnApplySubgroupCount";
-            // btnApplySubgroupCount.Click += new System.EventHandler(this.btnApplySubgroupCount_Click);
-
+            copyResultsFromClipboard.Location = new Point(12, 180);
+            copyResultsFromClipboard.Size = new Size(120, 50);
+            copyResultsFromClipboard.Name = "copyResultsFromClipboard";
+            copyResultsFromClipboard.Text = "Скопировать в буфер обмена";
+            copyResultsFromClipboard.Click += new System.EventHandler(this.copyResultsFromClipboard_Click);
 
             // Текстовое поле для ввода количества подгрупп
 
@@ -174,7 +182,7 @@ namespace FoxholeSupplyCalculator
             // | AnchorStyles.Left)
             // | AnchorStyles.Right)));
             panelSubgroups.AutoScroll = true;
-            panelSubgroups.FlowDirection = FlowDirection.TopDown;
+            panelSubgroups.FlowDirection = FlowDirection.TopDown | FlowDirection.LeftToRight;
             panelSubgroups.Location = new Point(12, 330);
             panelSubgroups.Name = "panelSubgroups";
             panelSubgroups.Size = new Size(400, 300);
@@ -243,8 +251,12 @@ namespace FoxholeSupplyCalculator
             dataGridQuotaView.RowHeadersVisible = false;
             dataGridQuotaView.Location = new Point(12, 250);
             dataGridQuotaView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridQuotaView.Size = new Size(570, 800);
+            dataGridQuotaView.Size = new Size(570, 400);
             dataGridQuotaView.ContextMenuStrip = contextMenuGrid;
+            dataGridQuotaView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            dataGridQuotaView.ScrollBars = ScrollBars.Vertical;
+            dataGridQuotaView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
+            dataGridQuotaView.AllowUserToAddRows = false;
 
 
             dataGridQuotaView.Columns.Add("Quantity", "Кол-во ящиков");
@@ -366,6 +378,7 @@ namespace FoxholeSupplyCalculator
             btnAddItem.UseVisualStyleBackColor = true;
             btnAddItem.Click += new System.EventHandler(btnAddItem_Click);
 
+            //
             // 
             // btnImportItems
             btnImportItems.Location = new Point(350, 12);
@@ -404,7 +417,13 @@ namespace FoxholeSupplyCalculator
 
             // 
             // tabMain Controls
-            // 
+            //
+
+            Image newImage = Image.FromFile("mqdefault.jpg");
+
+            // Create Point for upper-left corner of image.
+            Point ulCorner = new Point(100, 100);
+
             tabMain.Controls.Add(btnLoadFile);
             tabMain.Controls.Add(lblMatchedItems);
             tabMain.Controls.Add(dataGridQuotaView);
@@ -412,6 +431,8 @@ namespace FoxholeSupplyCalculator
             tabMain.Controls.Add(btnPasteFromClipboard);
             tabMain.Controls.Add(checkbxEdit);
             tabMain.Controls.Add(checkbxShowQuota);
+            tabMain.Controls.Add(btnDarkMode);
+            // tabMain.BackgroundImage = newImage;
 
 
             //tabDataBase Controls
@@ -434,6 +455,7 @@ namespace FoxholeSupplyCalculator
             tabCalculate.Controls.Add(btnApplySubgroupCount);
             tabCalculate.Controls.Add(btnApplySubgroupCount);
             tabCalculate.Controls.Add(numericSubgroupCount);
+            tabCalculate.Controls.Add(copyResultsFromClipboard);
 
             // 
             // Form1

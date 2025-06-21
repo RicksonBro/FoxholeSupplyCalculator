@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Threading;
 using System.Net.Http.Json;
 using System.Text.RegularExpressions;
+using System.ComponentModel;
 
 
 namespace FoxholeSupplyCalculator
@@ -18,8 +19,7 @@ namespace FoxholeSupplyCalculator
     {
         private List<Item> itemDatabase = new List<Item>();
         private List<SupplyEntry> supplyEntries = new List<SupplyEntry>();
-        private int soldierCount = 10;
-        private DataGridViewRow selectedRow = null;
+        private DataGridViewRow? selectedRow = null;
         private string? quotaText;
         private string quotaFilePath;
         private int clickedColumnIndex = -1; // добавь это поле в Form1, если его еще нет
@@ -27,7 +27,7 @@ namespace FoxholeSupplyCalculator
         private List<TextBox> subgroupTextBoxes = new List<TextBox>();
         private bool isUpdatingPlaceholders = false;
         private List<Item> currentItems = new();
-
+        private bool isDarkMode = false;
 
 
         public Form1()
@@ -35,6 +35,9 @@ namespace FoxholeSupplyCalculator
             InitializeComponent();
             LoadItemDatabase();
             btnShowItems_Click(null, null);
+            AllowDrop = true;
+            DragEnter += new DragEventHandler(Form1_DragEnter);
+            DragDrop += new DragEventHandler(Form1_DragDrop);
         }
 
         private void btnApplySubgroupCount_Click(object sender, EventArgs e)
@@ -54,6 +57,95 @@ namespace FoxholeSupplyCalculator
             RecalculatePlaceholders();
         }
 
+        private ColorScheme GetLightScheme()
+        {
+            return new ColorScheme
+            {
+                FormBG = Color.White,
+                FlowLayoutPanelBG = Color.White,
+                FlowLayoutPanelFG = Color.Black,
+                ButtonBG = Color.Gainsboro,
+                ButtonFG = Color.Black,
+                TextBoxBG = Color.White,
+                TextBoxFG = Color.Black,
+                TabControlBG = Color.White,
+                TabControlFG = Color.Black,
+                TabPageBG = Color.White,
+                TabPageFG = Color.Black,
+                dataGridQuotaViewBG = Color.White,
+                dataGridQuotaViewFG = Color.Black
+            };
+        }
+
+        private ColorScheme GetDarkScheme()
+        {
+            return new ColorScheme
+            {
+                FormBG = Color.FromArgb(20, 20, 20),
+                FlowLayoutPanelBG = Color.FromArgb(30, 30, 30),
+                FlowLayoutPanelFG = Color.White,
+                ButtonBG = Color.FromArgb(45, 45, 45),
+                ButtonFG = Color.White,
+                TextBoxBG = Color.FromArgb(40, 40, 40),
+                TextBoxFG = Color.White,
+                TabControlBG = Color.FromArgb(30, 30, 30),
+                TabControlFG = Color.White,
+                TabPageBG = Color.FromArgb(35, 35, 35),
+                TabPageFG = Color.White,
+                dataGridQuotaViewBG = Color.FromArgb(35, 35, 35),
+                dataGridQuotaViewFG = Color.White,
+
+            };
+        }
+
+        void Form1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+        void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            try
+            {
+                if (!string.IsNullOrEmpty(quotaText))
+                {
+                    DialogResult result = MessageBox.Show(
+                                        $"Таблица с квотой уже содержит данные. Заменить содержимое новой квотой из ${files[0]}?",
+                                        "Предупреждение",
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxIcon.Information,
+                                        MessageBoxDefaultButton.Button1,
+                                        MessageBoxOptions.DefaultDesktopOnly);
+                    if (result == DialogResult.Yes)
+                    {
+                        quotaFilePath = files[0];
+                        quotaText = File.ReadAllText(files[0]);
+
+                        LoadQuotaFromText(quotaText);
+                        txtQuotaInput.Text = txtQuotaInput.Text = quotaText.Replace("\n", "\r\n"); ; ;
+                        // Очистка старых данных
+                        MessageBox.Show("Файл успешно загружен и квота отображена.");
+                    }
+                }
+                else
+                {
+                    quotaFilePath = files[0];
+                    quotaText = File.ReadAllText(files[0]);
+
+                    LoadQuotaFromText(quotaText);
+                    txtQuotaInput.Text = quotaText.Replace("\n", "\r\n"); ;
+                    // Очистка старых данных
+                    MessageBox.Show("Файл успешно загружен и квота отображена.");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при загрузке: " + ex.Message);
+            }
+        }
+
         private void lstResults_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -63,6 +155,114 @@ namespace FoxholeSupplyCalculator
                 {
                     lstResults.SelectedIndex = index; // выделяем кликнутый элемент
                 }
+            }
+        }
+
+        private void btnDarkMode_Click(object sender, EventArgs e)
+        {
+            isDarkMode = !isDarkMode;
+
+            ColorScheme scheme = isDarkMode ? GetDarkScheme() : GetLightScheme();
+            ChangeTheme(scheme, this.Controls);
+        }
+
+
+
+        public void ChangeTheme(ColorScheme scheme, Control.ControlCollection container)
+        {
+            foreach (Control component in container)
+            {
+                if (component.HasChildren)
+                    ChangeTheme(scheme, component.Controls); // рекурсивно
+
+                // component.BackColor = Color.Black;
+                // component.ForeColor = Color.White;
+                if (component is FlowLayoutPanel)
+                {
+                    component.BackColor = scheme.FlowLayoutPanelBG;
+                    component.ForeColor = scheme.FlowLayoutPanelFG;
+                }
+                else if (component is Button)
+                {
+                    component.BackColor = scheme.ButtonBG;
+                    component.ForeColor = scheme.ButtonFG;
+                }
+                else if (component is TextBox)
+                {
+                    component.BackColor = scheme.TextBoxBG;
+                    component.ForeColor = scheme.TextBoxFG;
+                }
+                else if (component is TabPage)
+                {
+                    component.BackColor = scheme.dataGridQuotaViewBG;
+                    component.ForeColor = scheme.dataGridQuotaViewFG;
+                }
+                else if (component is DataGridView)
+                {
+                    component.BackColor = scheme.TabPageBG;
+                    component.ForeColor = scheme.TabPageFG;
+                }
+                else if (component is TabControl tabControl)
+                {
+                    if (isDarkMode)
+                    {
+                        tabControl.DrawMode = TabDrawMode.OwnerDrawFixed;
+                        tabControl.DrawItem -= DrawDarkTabHeader;
+                        tabControl.DrawItem += DrawDarkTabHeader;
+                        btnDarkMode.Image = Image.FromFile("sun-icon.png");
+                    }
+                    else
+                    {
+                        tabControl.DrawMode = TabDrawMode.Normal;
+                        tabControl.DrawItem -= DrawDarkTabHeader;
+                        btnDarkMode.Image = Image.FromFile("moon-icon.png");
+                    }
+
+                    tabControl.BackColor = scheme.TabControlBG;
+                    tabControl.ForeColor = scheme.TabControlFG;
+                }
+
+                else if (component is Label || component is CheckBox || component is ComboBox || component is ListBox)
+                {
+                    component.BackColor = scheme.TextBoxBG;
+                    component.ForeColor = scheme.TextBoxFG;
+                }
+            }
+
+            this.BackColor = scheme.FormBG;
+        }
+
+        private void DrawDarkTabHeader(object sender, DrawItemEventArgs e)
+        {
+            var tabControl = sender as TabControl;
+            var tabPage = tabControl?.TabPages[e.Index];
+            var bounds = e.Bounds;
+
+            using (SolidBrush backBrush = new SolidBrush(Color.FromArgb(40, 40, 40)))
+            using (SolidBrush foreBrush = new SolidBrush(Color.White))
+            using (Font font = new Font("Segoe UI", 9, FontStyle.Bold))
+            {
+                e.Graphics.FillRectangle(backBrush, bounds);
+                e.Graphics.DrawString(tabPage.Text, font, foreBrush, bounds.X + 6, bounds.Y + 4);
+            }
+        }
+
+        private void copyResultsFromClipboard_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (lstResults.Items.Count != 0)
+                {
+                    Clipboard.SetText(string.Join(Environment.NewLine, lstResults.Items.OfType<string>()));
+                }
+                else
+                {
+                    MessageBox.Show("Список результатов пустой");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка: ", ex.Message);
             }
         }
 
@@ -193,7 +393,7 @@ namespace FoxholeSupplyCalculator
             {
                 Text = $"Подгруппа {subgroupCounter}",
                 AutoSize = true,
-                Location = new Point(5, 6)
+                Location = new Point(5, 4)
             };
 
             var textBox = new TextBox
@@ -1218,6 +1418,31 @@ namespace FoxholeSupplyCalculator
         public double ValuePerUnit { get; set; }
         public double TotalValue { get; set; }
         public int RecommendedCrates { get; set; }
+    }
+
+
+
+    public class ColorScheme
+    {
+        public Color dataGridQuotaViewBG = Color.Black;
+        public Color dataGridQuotaViewFG = Color.White;
+
+        public Color FormBG = Color.Black;
+
+        public Color FlowLayoutPanelBG = Color.FromArgb(30, 30, 30);
+        public Color FlowLayoutPanelFG = Color.White;
+
+        public Color ButtonBG = Color.FromArgb(45, 45, 45);
+        public Color ButtonFG = Color.White;
+
+        public Color TextBoxBG = Color.FromArgb(40, 40, 40);
+        public Color TextBoxFG = Color.White;
+
+        public Color TabControlBG = Color.FromArgb(30, 30, 30);
+        public Color TabControlFG = Color.White;
+
+        public Color TabPageBG = Color.FromArgb(35, 35, 35);
+        public Color TabPageFG = Color.White;
     }
 
 
