@@ -12,6 +12,7 @@ namespace FoxholeSupplyCalculator
         public AddItemForm()
         {
             InitializeComponent();
+            StartPosition = FormStartPosition.CenterParent;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -34,7 +35,7 @@ namespace FoxholeSupplyCalculator
                 };
 
                 // путь к items.json в корне проекта
-                string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\items.json"));
+                string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"items.json"));
 
                 List<Item> items = new();
                 if (File.Exists(path))
@@ -61,5 +62,6 @@ namespace FoxholeSupplyCalculator
                 MessageBox.Show("Ошибка: " + ex.Message);
             }
         }
+
     }
 }

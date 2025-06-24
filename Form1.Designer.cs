@@ -23,6 +23,7 @@ namespace FoxholeSupplyCalculator
         private Button btnAddSubgroup;
         private Button btnRemoveSubgroup;
         private Button copyResultsFromClipboard;
+        private Button btnDeleteQuota;
 
         private TabControl tabControl;
         private TabPage tabMain;
@@ -90,6 +91,7 @@ namespace FoxholeSupplyCalculator
             txtSearchDB = new TextBox();
             var moveItem = new ToolStripMenuItem("Переместить");
             copyResultsFromClipboard = new Button();
+            btnDeleteQuota = new Button();
             moveItem.Click += MoveItem_Click;
             resultContextMenu.Items.Add(moveItem);
             lstResults.MouseDown += lstResults_MouseDown;
@@ -98,15 +100,16 @@ namespace FoxholeSupplyCalculator
 
             // NumericUpDown (ввод количества)
             btnDarkMode.Size = new Size(40, 40);
-            btnDarkMode.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            // btnDarkMode.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnDarkMode.Location = new Point(500, 12);
             btnDarkMode.Name = "btnDarkMode";
             btnDarkMode.Click += new System.EventHandler(this.btnDarkMode_Click);
             btnDarkMode.ImageAlign = ContentAlignment.MiddleCenter;
             btnDarkMode.Text = "";
-            btnDarkMode.Image = Image.FromFile("moon-icon.png");
+            btnDarkMode.Image = Image.FromFile("img/moon-icon.png");
 
             txtSearchDB.Location = new Point(12, 50);
-            txtSearchDB.Size = new Size(400, 30);
+            txtSearchDB.Size = new Size(550, 30);
             txtSearchDB.PlaceholderText = "🔍Поиск";
             txtSearchDB.TextChanged += new System.EventHandler(this.txtSearchDB_TextChanged);
 
@@ -126,6 +129,11 @@ namespace FoxholeSupplyCalculator
 
             // Текстовое поле для ввода количества подгрупп
 
+            btnDeleteQuota.Location = new Point(420, 140);
+            btnDeleteQuota.Size = new Size(120, 40);
+            btnDeleteQuota.Text = "Удалить квоту";
+            btnDeleteQuota.Name = "btnDeleteQuota";
+            btnDeleteQuota.Click += new System.EventHandler(this.btnDeleteQuota_Click);
 
             // Кнопка "Применить"
             btnApplySubgroupCount = new Button();
@@ -152,7 +160,7 @@ namespace FoxholeSupplyCalculator
             // txtQuotaInput.Visible = false; // Скрываем по умолчанию
             btnRemoveSubgroup.Location = new Point(10, 300);
             btnRemoveSubgroup.Name = "btnRemoveSubgroup";
-            btnRemoveSubgroup.Size = new Size(20, 26);
+            btnRemoveSubgroup.Size = new Size(20, 20);
             btnRemoveSubgroup.TextAlign = ContentAlignment.MiddleCenter;
             btnRemoveSubgroup.TabIndex = 0;
             btnRemoveSubgroup.Text = "-";
@@ -168,7 +176,7 @@ namespace FoxholeSupplyCalculator
 
             btnAddSubgroup.Location = new Point(130, 300);
             btnAddSubgroup.Name = "btnAddSubgroup";
-            btnAddSubgroup.Size = new Size(20, 26);
+            btnAddSubgroup.Size = new Size(20, 20);
             btnAddSubgroup.TextAlign = ContentAlignment.MiddleCenter;
             btnAddSubgroup.TabIndex = 0;
             btnAddSubgroup.Text = "+";
@@ -195,8 +203,8 @@ namespace FoxholeSupplyCalculator
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            // this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            // this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             // this.ClientSize = new Size(384, 440); // или больше, если нужно
 
 
@@ -214,14 +222,18 @@ namespace FoxholeSupplyCalculator
             btnPasteFromClipboard.Click += new System.EventHandler(this.btnPasteFromClipboard_Click);
 
             checkbxEdit.Location = new Point(200, 12);
+            checkbxEdit.Size = new Size(190, 25);
             checkbxEdit.Name = "checkbxEdit";
+            checkbxEdit.Text = "Редактировать текст квоты";
             checkbxEdit.Checked = false;
             checkbxEdit.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChangedEdit);
             checkbxEdit.Enabled = true;
 
+            checkbxShowQuota.Size = new Size(150, 30);
             checkbxShowQuota.Location = new Point(200, 36);
             checkbxShowQuota.Name = "checkbxShowQuota";
             checkbxShowQuota.Checked = true;
+            checkbxShowQuota.Text = "Показать текст квоты";
             checkbxShowQuota.CheckedChanged += new System.EventHandler(this.checkBox_CheckedChangedQShow);
 
 
@@ -238,7 +250,7 @@ namespace FoxholeSupplyCalculator
             txtQuotaInput.Multiline = true;
             txtQuotaInput.ScrollBars = ScrollBars.Vertical;
             txtQuotaInput.Location = new Point(12, 70);
-            txtQuotaInput.Size = new Size(400, 200);
+            txtQuotaInput.Size = new Size(400, 170);
             txtQuotaInput.ReadOnly = true;
             txtQuotaInput.TextChanged += new System.EventHandler(this.txtQuotaInput_TextChanged);
             txtQuotaInput.Visible = true;
@@ -419,7 +431,7 @@ namespace FoxholeSupplyCalculator
             // tabMain Controls
             //
 
-            Image newImage = Image.FromFile("mqdefault.jpg");
+            // Image newImage = Image.FromFile("mqdefault.jpg");
 
             // Create Point for upper-left corner of image.
             Point ulCorner = new Point(100, 100);
@@ -432,6 +444,7 @@ namespace FoxholeSupplyCalculator
             tabMain.Controls.Add(checkbxEdit);
             tabMain.Controls.Add(checkbxShowQuota);
             tabMain.Controls.Add(btnDarkMode);
+            tabMain.Controls.Add(btnDeleteQuota);
             // tabMain.BackgroundImage = newImage;
 
 
@@ -460,8 +473,9 @@ namespace FoxholeSupplyCalculator
             // 
             // Form1
             // 
+            StartPosition = FormStartPosition.CenterScreen;
             ClientSize = new Size(600, 700);
-            Icon = new Icon("icon.ico");
+            Icon = new Icon("img/icon.ico");
             Controls.Add(tabControl);
             Name = "Form1";
             Text = "Калькулятор для Foxhole";

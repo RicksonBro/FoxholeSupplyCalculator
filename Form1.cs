@@ -28,6 +28,9 @@ namespace FoxholeSupplyCalculator
         private bool isUpdatingPlaceholders = false;
         private List<Item> currentItems = new();
         private bool isDarkMode = false;
+        List<SubgroupEntry> subgroups = new();
+
+
 
 
         public Form1()
@@ -44,18 +47,79 @@ namespace FoxholeSupplyCalculator
         {
             int targetCount = (int)numericSubgroupCount.Value;
 
-            while (subgroupTextBoxes.Count < targetCount)
+            while (subgroups.Count < targetCount)
             {
-                btnAddSubgroup_Click(null, null);
+                AddSubgroup();
             }
 
-            while (subgroupTextBoxes.Count > targetCount)
+            while (subgroups.Count > targetCount)
             {
-                btnRemoveSubgroup_Click(null, null);
+                RemoveLastSubgroup();
             }
 
             RecalculatePlaceholders();
         }
+
+
+        private void AddSubgroup()
+        {
+            subgroupCounter++;
+
+            var panel = new Panel
+            {
+                Height = 28,
+                Width = panelSubgroups.ClientSize.Width - 25,
+                Margin = new Padding(1),
+                BackColor = Color.Transparent
+            };
+
+            var nameBox = new TextBox
+            {
+                PlaceholderText = $"Подгруппа {subgroupCounter}",
+                Height = 25,
+                Width = 100,
+                Location = new Point(5, 3)
+            };
+
+            var percentBox = new TextBox
+            {
+                Width = 60,
+                Height = 25,
+                Location = new Point(nameBox.Right + 10, 3),
+                PlaceholderText = "25%",
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
+            };
+            percentBox.TextChanged += OnSubgroupTextChanged;
+
+            panel.Controls.Add(nameBox);
+            panel.Controls.Add(percentBox);
+            panelSubgroups.Controls.Add(panel);
+            subgroupTextBoxes.Add(percentBox);
+
+            subgroups.Add(new SubgroupEntry
+            {
+                NameBox = nameBox,
+                PercentBox = percentBox
+            });
+        }
+
+
+        private void RemoveLastSubgroup()
+        {
+            if (subgroups.Count == 0)
+                return;
+
+            // Удаляем панель с формы
+            var lastEntry = subgroups.Last();
+            var lastPanel = lastEntry.NameBox.Parent; // обе TextBox находятся в одной Panel
+            if (lastPanel != null)
+                panelSubgroups.Controls.Remove(lastPanel);
+
+            subgroups.RemoveAt(subgroups.Count - 1);
+            subgroupCounter--;
+            subgroupTextBoxes.RemoveAt(subgroupTextBoxes.Count - 1);
+        }
+
 
         private ColorScheme GetLightScheme()
         {
@@ -94,6 +158,7 @@ namespace FoxholeSupplyCalculator
                 TabPageFG = Color.White,
                 dataGridQuotaViewBG = Color.FromArgb(35, 35, 35),
                 dataGridQuotaViewFG = Color.White,
+
 
             };
         }
@@ -175,8 +240,6 @@ namespace FoxholeSupplyCalculator
                 if (component.HasChildren)
                     ChangeTheme(scheme, component.Controls); // рекурсивно
 
-                // component.BackColor = Color.Black;
-                // component.ForeColor = Color.White;
                 if (component is FlowLayoutPanel)
                 {
                     component.BackColor = scheme.FlowLayoutPanelBG;
@@ -209,18 +272,32 @@ namespace FoxholeSupplyCalculator
                         tabControl.DrawMode = TabDrawMode.OwnerDrawFixed;
                         tabControl.DrawItem -= DrawDarkTabHeader;
                         tabControl.DrawItem += DrawDarkTabHeader;
-                        btnDarkMode.Image = Image.FromFile("sun-icon.png");
+                        btnDarkMode.Image = Image.FromFile("img/sun-icon.png");
                     }
                     else
                     {
                         tabControl.DrawMode = TabDrawMode.Normal;
                         tabControl.DrawItem -= DrawDarkTabHeader;
-                        btnDarkMode.Image = Image.FromFile("moon-icon.png");
+                        btnDarkMode.Image = Image.FromFile("img/moon-icon.png");
                     }
 
                     tabControl.BackColor = scheme.TabControlBG;
                     tabControl.ForeColor = scheme.TabControlFG;
                 }
+                else if (component is DataGridView dgv)
+                {
+                    dgv.BackgroundColor = scheme.GridBackground;
+                    dgv.ForeColor = scheme.GridForeground;
+                    dgv.ColumnHeadersDefaultCellStyle.BackColor = scheme.GridHeaderBG;
+                    dgv.ColumnHeadersDefaultCellStyle.ForeColor = scheme.GridHeaderFG;
+                    dgv.EnableHeadersVisualStyles = false;
+
+                    dgv.DefaultCellStyle.BackColor = scheme.GridCellBG;
+                    dgv.DefaultCellStyle.ForeColor = scheme.GridCellFG;
+                    dgv.DefaultCellStyle.SelectionBackColor = scheme.GridSelectionBG;
+                    dgv.DefaultCellStyle.SelectionForeColor = scheme.GridSelectionFG;
+                }
+
 
                 else if (component is Label || component is CheckBox || component is ComboBox || component is ListBox)
                 {
@@ -272,37 +349,49 @@ namespace FoxholeSupplyCalculator
 
             string selectedText = lstResults.SelectedItem.ToString();
 
-            // Проверка, что это предмет (а не строка заголовка типа "Подгруппа X:")
             if (!selectedText.Contains("ящ.")) return;
 
-            // Получение текущей подгруппы
-            int currentSubgroup = -1;
+            // 1. Получаем текущую подгруппу по предыдущей строке
+            // Получаем все имена подгрупп
+            List<string> subgroupNames = subgroups
+                .Select(s => string.IsNullOrWhiteSpace(s.NameBox.Text) ? s.NameBox.PlaceholderText : s.NameBox.Text)
+                .ToList();
+
+            string? currentSubgroupName = null;
+            int currentSubgroupIndex = -1;
+
+            // Ищем имя подгруппы в результатах (выше текущего предмета)
             for (int i = lstResults.SelectedIndex - 1; i >= 0; i--)
             {
-                string line = lstResults.Items[i].ToString();
-                if (line.StartsWith("Подгруппа"))
+                string line = lstResults.Items[i].ToString().Trim();
+                var headerMatch = Regex.Match(line, @"^(.*?)\s*(\(|$)");
+                currentSubgroupName = headerMatch.Groups[1].Value.Trim();
+
+                if (line.StartsWith("Подгруппа") || subgroupNames.Contains(currentSubgroupName)) // Это заголовок подгруппы
                 {
-                    if (int.TryParse(line.Split(' ')[1].TrimEnd(':'), out int parsed))
+                    // Извлекаем имя подгруппы до скобки с процентом
+                    // до " (" или конца строки
+                    if (headerMatch.Success)
                     {
-                        currentSubgroup = parsed - 1; // индекс с нуля
-                        break;
+                        currentSubgroupIndex = subgroupNames.FindIndex(name =>
+                            string.Equals(name, currentSubgroupName, StringComparison.OrdinalIgnoreCase));
                     }
+                    break;
                 }
             }
 
-            if (currentSubgroup < 0)
+            if (currentSubgroupIndex < 0)
             {
-                MessageBox.Show("Не удалось определить подгруппу.");
+                MessageBox.Show("Не удалось определить текущую подгруппу.");
                 return;
             }
 
-            // Извлекаем название предмета и количество ящиков
-            string lineText = selectedText.Trim();
+
+            // 2. Извлекаем название предмета и количество
             string itemName;
             int qty;
 
-            // Пример: "   Винтовка — 4 ящ."
-            var match = Regex.Match(lineText, @"(.+?)—\s*(\d+)\s*ящ");
+            var match = Regex.Match(selectedText.Trim(), @"(.+?)—\s*(\d+)\s*ящ");
             if (match.Success)
             {
                 itemName = match.Groups[1].Value.Trim();
@@ -320,47 +409,53 @@ namespace FoxholeSupplyCalculator
                 return;
             }
 
-            MessageBox.Show(itemName);
-
-            // Открываем форму перемещения
-            using (var moveForm = new MoveItemForm(subgroupTextBoxes.Count, qty))
+            using (var moveForm = new MoveItemForm(subgroupNames, qty))
             {
                 if (moveForm.ShowDialog() == DialogResult.OK)
                 {
-                    int targetSubgroup = moveForm.SelectedSubgroupIndex;
+                    int targetSubgroupIndex = moveForm.SelectedSubgroupIndex;
                     int amountToMove = moveForm.QuantityToMove;
 
-                    if (targetSubgroup == currentSubgroup)
+                    if (targetSubgroupIndex == currentSubgroupIndex)
                     {
                         MessageBox.Show("Нельзя переместить предмет в ту же подгруппу.");
                         return;
                     }
 
-                    int selectedIndex = lstResults.SelectedIndex; // Сохраняем индекс до удаления
-
-                    // Удаляем старую запись
+                    // Удаление текущей строки
+                    int selectedIndex = lstResults.SelectedIndex;
                     lstResults.Items.RemoveAt(selectedIndex);
 
-                    // Обновляем старую подгруппу, вычитая перемещённое количество
+                    // Обновляем оставшееся количество в старой подгруппе
                     if (qty - amountToMove > 0)
                     {
                         string updatedOld = $"   {itemName} — {qty - amountToMove} ящ.";
                         lstResults.Items.Insert(selectedIndex, updatedOld);
                     }
 
-                    // Находим позицию подгруппы назначения
+                    // 3. Вставка в нужную подгруппу
+                    string targetGroupName = GetSubgroupNameByIndex(targetSubgroupIndex);
                     int insertIndex = -1;
+
                     for (int i = 0; i < lstResults.Items.Count; i++)
                     {
-                        string text = lstResults.Items[i].ToString();
+                        string line = lstResults.Items[i].ToString().Trim();
 
-                        if (text.StartsWith($"Подгруппа {targetSubgroup + 1}"))
+                        if (!line.StartsWith("   ")) // Это заголовок подгруппы
                         {
-                            insertIndex = i + 1;
-                            break;
+                            var itemMatch = Regex.Match(line, @"^(.*?)\s*(\(|$)");
+                            if (itemMatch.Success)
+                            {
+                                string groupName = itemMatch.Groups[1].Value.Trim();
+                                if (string.Equals(groupName, targetGroupName, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    insertIndex = i + 1;
+                                    break;
+                                }
+                            }
                         }
                     }
-                    MessageBox.Show($"insertIndex: {insertIndex}");
+
 
                     if (insertIndex != -1)
                     {
@@ -371,8 +466,20 @@ namespace FoxholeSupplyCalculator
                         MessageBox.Show("Целевая подгруппа не найдена.");
                     }
                 }
-
             }
+        }
+
+        // Вспомогательный метод: получить имя подгруппы по индексу
+        private string GetSubgroupNameByIndex(int index)
+        {
+            if (index >= 0 && index < subgroups.Count)
+            {
+                var entry = subgroups[index];
+                string name = string.IsNullOrWhiteSpace(entry.NameBox.Text) ? entry.NameBox.PlaceholderText : entry.NameBox.Text;
+                return name;
+            }
+
+            return $"Подгруппа {index + 1}";
         }
 
 
@@ -389,32 +496,40 @@ namespace FoxholeSupplyCalculator
                 BackColor = Color.Transparent
             };
 
-            var label = new Label
+            var nameBox = new TextBox
             {
-                Text = $"Подгруппа {subgroupCounter}",
-                AutoSize = true,
-                Location = new Point(5, 4)
+                Width = 100,
+                Height = 25,
+                Location = new Point(5, 3),
+                PlaceholderText = $"Подгруппа {subgroupCounter}"
             };
 
-            var textBox = new TextBox
+            var percentBox = new TextBox
             {
                 Width = 60,
                 Height = 25,
-                Location = new Point(label.Width + 10, 3), // Справа от панели
-                PlaceholderText = "25%", // Пример плейсхолдера
-                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Location = new Point(nameBox.Right + 10, 3),
+                PlaceholderText = "25%",
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
             };
-            textBox.TextChanged += OnSubgroupTextChanged;
+            percentBox.TextChanged += OnSubgroupTextChanged;
 
-            // Добавляем контролы в панель и на форму
-            subgroupPanel.Controls.Add(label);
-            subgroupPanel.Controls.Add(textBox);
+            // Добавляем контролы в панель
+            subgroupPanel.Controls.Add(nameBox);
+            subgroupPanel.Controls.Add(percentBox);
             panelSubgroups.Controls.Add(subgroupPanel);
 
-            subgroupTextBoxes.Add(textBox);
+            // Добавляем процентный TextBox в список (если ты используешь имя тоже — можно сделать отдельный список или класс)
+            subgroupTextBoxes.Add(percentBox);
+            subgroups.Add(new SubgroupEntry
+            {
+                NameBox = nameBox,
+                PercentBox = percentBox
+            });
 
-            RecalculatePlaceholders(); // функция автозаполнения
+            RecalculatePlaceholders();
         }
+
 
         private void OnSubgroupTextChanged(object sender, EventArgs e)
         {
@@ -486,8 +601,9 @@ namespace FoxholeSupplyCalculator
                 }
 
                 panelSubgroups.Controls.Remove(last);
-
+                subgroups.RemoveAt(subgroups.Count - 1);
                 subgroupCounter--;
+                subgroupTextBoxes.RemoveAt(subgroupTextBoxes.Count - 1);
 
                 RecalculatePlaceholders();
             }
@@ -535,13 +651,13 @@ namespace FoxholeSupplyCalculator
 
         private void checkBox_CheckedChangedEdit(object sender, EventArgs e)
         {
-            txtQuotaInput.ReadOnly = checkbxEdit.Checked == true ? false : true;
+            txtQuotaInput.ReadOnly = !checkbxEdit.Checked;
         }
 
         private void checkBox_CheckedChangedQShow(object sender, EventArgs e)
         {
-            txtQuotaInput.Visible = checkbxShowQuota.Checked == true ? true : false;
-            checkbxEdit.Enabled = checkbxShowQuota.Checked == true ? true : false;
+            txtQuotaInput.Visible = checkbxShowQuota.Checked;
+            checkbxEdit.Enabled = checkbxShowQuota.Checked;
         }
 
         private void dataGridQuotaView_MouseDown(object sender, MouseEventArgs e)
@@ -558,14 +674,6 @@ namespace FoxholeSupplyCalculator
                 }
             }
         }
-
-        // private void dataGridQuotaView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-        // {
-        //     if (dataGridQuotaView.IsCurrentCellDirty)
-        //     {
-        //         dataGridQuotaView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-        //     }
-        // }
 
         private void dataGridQuotaView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -651,6 +759,19 @@ namespace FoxholeSupplyCalculator
             }
 
             // File.WriteAllText(quotaFilePath, quotaText);
+        }
+
+        private void btnDeleteQuota_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(quotaText))
+            {
+                MessageBox.Show("Данные квоты пустые");
+                return;
+            }
+            quotaText = null;
+            dataGridQuotaView.Rows.Clear();
+            supplyEntries.Clear();
+            txtQuotaInput.Clear();
         }
 
 
@@ -873,7 +994,7 @@ namespace FoxholeSupplyCalculator
         {
             try
             {
-                string jsonPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\items.json"));
+                string jsonPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"items.json"));
 
                 if (File.Exists(jsonPath))
                 {
@@ -897,7 +1018,7 @@ namespace FoxholeSupplyCalculator
 
             try
             {
-                string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\items.json"));
+                string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"items.json"));
                 if (!File.Exists(path))
                 {
                     MessageBox.Show("Файл items.json не найден.");
@@ -969,7 +1090,7 @@ namespace FoxholeSupplyCalculator
 
             string namePart = selected.Substring(endOfId, startOfNicks - endOfId).Trim();
 
-            string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\items.json"));
+            string path = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"items.json"));
             if (!File.Exists(path))
             {
                 MessageBox.Show("Файл items.json не найден.");
@@ -1126,7 +1247,7 @@ namespace FoxholeSupplyCalculator
                 }
 
                 // Загрузка текущей базы
-                string jsonPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\items.json"));
+                string jsonPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"items.json"));
                 var currentItems = File.Exists(jsonPath)
                     ? JsonSerializer.Deserialize<List<Item>>(File.ReadAllText(jsonPath)) ?? new List<Item>()
                     : new List<Item>();
@@ -1245,6 +1366,11 @@ namespace FoxholeSupplyCalculator
                 MessageBox.Show("Добавьте хотя бы одну подгруппу.");
                 return;
             }
+            if (quotaText == null)
+            {
+                MessageBox.Show("Отсутствует текст квоты.");
+                return;
+            }
 
 
             lstResults.Items.Clear();
@@ -1332,23 +1458,40 @@ namespace FoxholeSupplyCalculator
             }
 
             lstResults.Items.Clear();
+
             for (int i = 0; i < subgroupCount; i++)
             {
-                lstResults.Items.Add($"Подгруппа {i + 1} ({subgroupPercentages[i]:F1}%):");
+                string subgroupName = GetSubgroupNameByIndex(i); // Получаем имя подгруппы
+                lstResults.Items.Add($"{subgroupName} ({subgroupPercentages[i]:F1}%):");
+
                 var grouped = subgroupResults[i]
                     .GroupBy(x => x)
                     .Select(g => new { Text = g.Key, Count = g.Count() });
 
                 foreach (var entry in grouped)
                 {
-                    if (entry.Count > 1)
-                        lstResults.Items.Add($"   {entry.Text} × {entry.Count}");
+                    // Если уже есть "— X ящ." в тексте, нужно просто изменить количество
+                    var match = Regex.Match(entry.Text, @"^(.+?)\s*—\s*(\d+)\s*ящ", RegexOptions.IgnoreCase);
+                    if (match.Success)
+                    {
+                        string itemName = match.Groups[1].Value.Trim();
+                        int baseCount = int.Parse(match.Groups[2].Value);
+                        int total = baseCount * entry.Count;
+
+                        lstResults.Items.Add($"   {itemName} — {total} ящ.");
+                    }
                     else
-                        lstResults.Items.Add("   " + entry.Text);
+                    {
+                        // Если в исходной строке нет количества — считаем что 1 ящик на запись
+                        int total = entry.Count;
+                        lstResults.Items.Add($"   {entry.Text} — {total} ящ.");
+                    }
                 }
 
                 lstResults.Items.Add($"   Общая ценность: {subgroupValues[i]:F2}");
             }
+
+
 
         }
 
@@ -1420,6 +1563,11 @@ namespace FoxholeSupplyCalculator
         public int RecommendedCrates { get; set; }
     }
 
+    public class SubgroupEntry
+    {
+        public TextBox NameBox { get; set; }
+        public TextBox PercentBox { get; set; }
+    }
 
 
     public class ColorScheme
@@ -1443,6 +1591,15 @@ namespace FoxholeSupplyCalculator
 
         public Color TabPageBG = Color.FromArgb(35, 35, 35);
         public Color TabPageFG = Color.White;
+        public Color GridBackground = Color.Black;
+        public Color GridForeground = Color.White;
+        public Color GridHeaderBG = Color.FromArgb(45, 45, 45);
+        public Color GridHeaderFG = Color.White;
+        public Color GridCellBG = Color.Black;
+        public Color GridCellFG = Color.White;
+        public Color GridSelectionBG = Color.DarkSlateGray;
+        public Color GridSelectionFG = Color.White;
+
     }
 
 

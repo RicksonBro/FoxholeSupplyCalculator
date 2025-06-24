@@ -17,13 +17,14 @@ public partial class ItemSelectionForm : Form
 
         InitializeComponent();
         LoadItems();
+        StartPosition = FormStartPosition.CenterParent;
     }
 
     private void InitializeComponent()
     {
-        this.Text = "Выберите предмет";
-        this.Width = 300;
-        this.Height = 400;
+        Text = "Выберите предмет";
+        Width = 300;
+        Height = 400;
 
         listBox = new ListBox() { Dock = DockStyle.Bottom };
         listBox.Size = new Size(100, 300);
@@ -33,9 +34,9 @@ public partial class ItemSelectionForm : Form
         // txtSearch.Location = new Point(12, 10);
         txtSearch.Size = new Size(100, 30);
         txtSearch.PlaceholderText = "🔍Поиск";
-        txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+        txtSearch.TextChanged += new EventHandler(txtSearch_TextChanged);
 
-        this.Controls.Add(listBox);
+        Controls.Add(listBox);
         Controls.Add(txtSearch);
     }
 
@@ -57,8 +58,8 @@ public partial class ItemSelectionForm : Form
             // Получаем имя до " — "
             string selectedName = selectedLine.Split('—')[0].Trim();
             SelectedItem = items.Find(i => i.Name == selectedName);
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 

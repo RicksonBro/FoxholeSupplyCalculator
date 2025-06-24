@@ -1,0 +1,6 @@
+D:\FoxholeSupplyCalculator\bin\Release\net6.0-windows\publish\FoxholeSupplyCalculator.exe
+D:\FoxholeSupplyCalculator\bin\Release\net6.0-windows\publish\items.json
+D:\FoxholeSupplyCalculator\bin\Release\net6.0-windows\publish\FoxholeSupplyCalculator.dll
+D:\FoxholeSupplyCalculator\bin\Release\net6.0-windows\publish\FoxholeSupplyCalculator.deps.json
+D:\FoxholeSupplyCalculator\bin\Release\net6.0-windows\publish\FoxholeSupplyCalculator.runtimeconfig.json
+D:\FoxholeSupplyCalculator\bin\Release\net6.0-windows\publish\FoxholeSupplyCalculator.pdb

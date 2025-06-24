@@ -1,0 +1,3040 @@
+[
+  {
+    "itemName": "\u0428\u0442\u0443\u0440\u043C\u043E\u0432\u0430\u044F \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430 Booker Model 838",
+    "nickname": [
+      "\u0428\u0442\u0443\u0440\u043C\u043E\u0432\u0430\u044F \u0432\u0438\u043D\u0442\u043E\u0432\u043A\u0430 Booker Model 838"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 0,
+      "emat": 20,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "\u041F\u0438\u0441\u0442\u043E\u043B\u0435\u0442",
+    "nickname": [
+      "\u043F\u0438\u0441\u0442\u043E\u043B\u0435\u0442"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 20,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf",
+      "factory",
+      "refinery"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "\u0022Dusk\u0022 ce.III",
+    "nickname": [
+      "\u0022Dusk\u0022 ce.III"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 15,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Booker Storm Rifle Model 838",
+    "nickname": [
+      "Booker Storm Rifle Model 838"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 15,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Aalto Storm Rifle 24",
+    "nickname": [
+      "Aalto Storm Rifle 24"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 15,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "7.92mm",
+    "nickname": [
+      "7.92mm"
+    ],
+    "cost": {
+      "bmat": 120,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Catara mo.II",
+    "nickname": [
+      "Catara mo.II"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 15,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "KRN886-127 Gast Machine Gun",
+    "nickname": [
+      "KRN886-127 Gast Machine Gun"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 25,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Malone MK.2",
+    "nickname": [
+      "Malone MK.2"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 25,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "A3 Harpa Fragmentation Grenade",
+    "nickname": [
+      "A3 Harpa Fragmentation Grenade"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 40,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Cascadier 873",
+    "nickname": [
+      "Cascadier 873"
+    ],
+    "cost": {
+      "bmat": 60,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Bomastone Grenade",
+    "nickname": [
+      "Bomastone Grenade"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 40,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "8mm",
+    "nickname": [
+      "8mm"
+    ],
+    "cost": {
+      "bmat": 40,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Cometa T2-9",
+    "nickname": [
+      "Cometa T2-9"
+    ],
+    "cost": {
+      "bmat": 60,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "The Hangman 757",
+    "nickname": [
+      "The Hangman 757"
+    ],
+    "cost": {
+      "bmat": 125,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": ".44",
+    "nickname": [
+      ".44"
+    ],
+    "cost": {
+      "bmat": 40,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Catena rt.IV Auto-Rifle",
+    "nickname": [
+      "Catena rt.IV Auto-Rifle"
+    ],
+    "cost": {
+      "bmat": 120,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Argenti r.II Rifle",
+    "nickname": [
+      "Argenti r.II Rifle"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Volta r.I Repeater",
+    "nickname": [
+      "Volta r.I Repeater"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Fuscina pi.I",
+    "nickname": [
+      "Fuscina pi.I"
+    ],
+    "cost": {
+      "bmat": 140,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "KRR2-790 Omen",
+    "nickname": [
+      "KRR2-790 Omen"
+    ],
+    "cost": {
+      "bmat": 155,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "KRR3-792 Auger",
+    "nickname": [
+      "KRR3-792 Auger"
+    ],
+    "cost": {
+      "bmat": 250,
+      "rmat": 30,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Sampo Auto-Rifle 77",
+    "nickname": [
+      "Sampo Auto-Rifle 77"
+    ],
+    "cost": {
+      "bmat": 125,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Blakerow 871",
+    "nickname": [
+      "Blakerow 871"
+    ],
+    "cost": {
+      "bmat": 140,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Clancy Cinder M3",
+    "nickname": [
+      "Clancy Cinder M3"
+    ],
+    "cost": {
+      "bmat": 130,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "No. 2B Hawthorne",
+    "nickname": [
+      "No. 2B Hawthorne"
+    ],
+    "cost": {
+      "bmat": 70,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "No.2 Loughcaster",
+    "nickname": [
+      "No.2 Loughcaster"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Clancy-Raca M4",
+    "nickname": [
+      "Clancy-Raca M4"
+    ],
+    "cost": {
+      "bmat": 250,
+      "rmat": 25,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "7.62mm",
+    "nickname": [
+      "7.62mm"
+    ],
+    "cost": {
+      "bmat": 80,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "KRF1-750 Dragonfly",
+    "nickname": [
+      "KRF1-750 Dragonfly"
+    ],
+    "cost": {
+      "bmat": 110,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "No.4 The Pillory Scattergun",
+    "nickname": [
+      "No.4 The Pillory Scattergun"
+    ],
+    "cost": {
+      "bmat": 80,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Buckshot",
+    "nickname": [
+      "Buckshot"
+    ],
+    "cost": {
+      "bmat": 80,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "No.1 \u0022The Liar\u0022 Submachinegun",
+    "nickname": [
+      "No.1 \u0022The Liar\u0022 Submachinegun"
+    ],
+    "cost": {
+      "bmat": 120,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Fiddler Submachine Gun Model 868",
+    "nickname": [
+      "Fiddler Submachine Gun Model 868"
+    ],
+    "cost": {
+      "bmat": 120,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "\u0022The Pitch Gun\u0022 mc. V",
+    "nickname": [
+      "\u0022The Pitch Gun\u0022 mc. V"
+    ],
+    "cost": {
+      "bmat": 80,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "\u0022Lionclaw\u0022 mc.VIII",
+    "nickname": [
+      "\u0022Lionclaw\u0022 mc.VIII"
+    ],
+    "cost": {
+      "bmat": 120,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "9mm SMG",
+    "nickname": [
+      "9mm SMG"
+    ],
+    "cost": {
+      "bmat": 80,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "PT-815 Smoke Grenade",
+    "nickname": [
+      "PT-815 Smoke Grenade"
+    ],
+    "cost": {
+      "bmat": 120,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "Green Ash Grenade",
+    "nickname": [
+      "Green Ash Grenade"
+    ],
+    "cost": {
+      "bmat": 140,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "12.7mm",
+    "nickname": [
+      "12.7mm"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "small_arms"
+  },
+  {
+    "itemName": "\u0022Typhon\u0022 ra.XII",
+    "nickname": [
+      "\u0022Typhon\u0022 ra.XII"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 5,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "135 Neville Anti-Tank Rifle",
+    "nickname": [
+      "135 Neville Anti-Tank Rifle"
+    ],
+    "cost": {
+      "bmat": 150,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "20mm",
+    "nickname": [
+      "20mm"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Venom c.II 35",
+    "nickname": [
+      "Venom c.II 35"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 15,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Carnyx Anti-Tank Rocket Launcher",
+    "nickname": [
+      "Carnyx Anti-Tank Rocket Launcher"
+    ],
+    "cost": {
+      "bmat": 125,
+      "rmat": 15,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Bane 45",
+    "nickname": [
+      "Bane 45"
+    ],
+    "cost": {
+      "bmat": 150,
+      "rmat": 40,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "AP/RPG",
+    "nickname": [
+      "AP/RPG"
+    ],
+    "cost": {
+      "bmat": 60,
+      "rmat": 0,
+      "emat": 150,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Mounted Bonesaw MK.3",
+    "nickname": [
+      "Mounted Bonesaw MK.3"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 5,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Bonesaw MK.3",
+    "nickname": [
+      "Bonesaw MK.3"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 25,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "ARC/RPG",
+    "nickname": [
+      "ARC/RPG"
+    ],
+    "cost": {
+      "bmat": 60,
+      "rmat": 0,
+      "emat": 150,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "\u0022Molten Wind\u0022 v.II Flame Torch",
+    "nickname": [
+      "\u0022Molten Wind\u0022 v.II Flame Torch"
+    ],
+    "cost": {
+      "bmat": 185,
+      "rmat": 25,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "KLG901-2 Lunaire F",
+    "nickname": [
+      "KLG901-2 Lunaire F"
+    ],
+    "cost": {
+      "bmat": 50,
+      "rmat": 30,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Mounted Fissura gd.I",
+    "nickname": [
+      "Mounted Fissura gd.I"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 5,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Willow\u0027s Bane Model 845",
+    "nickname": [
+      "Willow\u0027s Bane Model 845"
+    ],
+    "cost": {
+      "bmat": 165,
+      "rmat": 30,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Tremola Grenade GPb-1",
+    "nickname": [
+      "Tremola Grenade GPb-1"
+    ],
+    "cost": {
+      "bmat": 75,
+      "rmat": 0,
+      "emat": 100,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Lamentum mm.IV",
+    "nickname": [
+      "Lamentum mm.IV"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 5,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Malone Ratcatcher MK.1",
+    "nickname": [
+      "Malone Ratcatcher MK.1"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 5,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Daucus isg.III",
+    "nickname": [
+      "Daucus isg.III"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 5,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "30mm",
+    "nickname": [
+      "30mm"
+    ],
+    "cost": {
+      "bmat": 80,
+      "rmat": 0,
+      "emat": 40,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Cremari Mortar",
+    "nickname": [
+      "Cremari Mortar"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 25,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Mortar Flare Shell",
+    "nickname": [
+      "Mortar Flare Shell"
+    ],
+    "cost": {
+      "bmat": 60,
+      "rmat": 0,
+      "emat": 15,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Mortar Shrapnel Shell",
+    "nickname": [
+      "Mortar Shrapnel Shell"
+    ],
+    "cost": {
+      "bmat": 60,
+      "rmat": 0,
+      "emat": 20,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Mortar Shell",
+    "nickname": [
+      "Mortar Shell"
+    ],
+    "cost": {
+      "bmat": 60,
+      "rmat": 0,
+      "emat": 70,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Ignifist 30",
+    "nickname": [
+      "Ignifist 30"
+    ],
+    "cost": {
+      "bmat": 85,
+      "rmat": 0,
+      "emat": 70,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "BF5 White Ash Flask Grenade",
+    "nickname": [
+      "BF5 White Ash Flask Grenade"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 80,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "B2 Varsi Anti-Tank Grenade",
+    "nickname": [
+      "B2 Varsi Anti-Tank Grenade"
+    ],
+    "cost": {
+      "bmat": 95,
+      "rmat": 0,
+      "emat": 125,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Mammon 91-b",
+    "nickname": [
+      "Mammon 91-b"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 20,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Anti-Tank Sticky Bomb",
+    "nickname": [
+      "Anti-Tank Sticky Bomb"
+    ],
+    "cost": {
+      "bmat": 50,
+      "rmat": 0,
+      "emat": 100,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Cutler Foebreaker",
+    "nickname": [
+      "Cutler Foebreaker"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 5,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "Cutler Launcher 4",
+    "nickname": [
+      "Cutler Launcher 4"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 35,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "R.P.G Shell",
+    "nickname": [
+      "R.P.G Shell"
+    ],
+    "cost": {
+      "bmat": 60,
+      "rmat": 0,
+      "emat": 90,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_arms"
+  },
+  {
+    "itemName": "150mm",
+    "nickname": [
+      "150mm"
+    ],
+    "cost": {
+      "bmat": 120,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 60
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_ammunition"
+  },
+  {
+    "itemName": "120mm",
+    "nickname": [
+      "120mm"
+    ],
+    "cost": {
+      "bmat": 120,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 10
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_ammunition"
+  },
+  {
+    "itemName": "250mm",
+    "nickname": [
+      "250mm"
+    ],
+    "cost": {
+      "bmat": 120,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 100
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_ammunition"
+  },
+  {
+    "itemName": "68mm AT",
+    "nickname": [
+      "68mm AT"
+    ],
+    "cost": {
+      "bmat": 120,
+      "rmat": 0,
+      "emat": 240,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_ammunition"
+  },
+  {
+    "itemName": "40mm",
+    "nickname": [
+      "40mm"
+    ],
+    "cost": {
+      "bmat": 160,
+      "rmat": 0,
+      "emat": 240,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "heavy_ammunition"
+  },
+  {
+    "itemName": "Barbed Wire",
+    "nickname": [
+      "Barbed Wire"
+    ],
+    "cost": {
+      "bmat": 15,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Buckhorn CCQ-18",
+    "nickname": [
+      "Buckhorn CCQ-18"
+    ],
+    "cost": {
+      "bmat": 40,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Binoculars",
+    "nickname": [
+      "Binoculars"
+    ],
+    "cost": {
+      "bmat": 75,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Hydra\u0027s Whisper",
+    "nickname": [
+      "Hydra\u0027s Whisper"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 80,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Havoc Charge",
+    "nickname": [
+      "Havoc Charge"
+    ],
+    "cost": {
+      "bmat": 75,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 40
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Willow\u0027s Bane Ammo",
+    "nickname": [
+      "Willow\u0027s Bane Ammo"
+    ],
+    "cost": {
+      "bmat": 135,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 20
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "\u0022Molten Wind\u0022 v.II Ammo",
+    "nickname": [
+      "\u0022Molten Wind\u0022 v.II Ammo"
+    ],
+    "cost": {
+      "bmat": 160,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 20
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Listening Kit",
+    "nickname": [
+      "Listening Kit"
+    ],
+    "cost": {
+      "bmat": 150,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Falias Raiding Club",
+    "nickname": [
+      "Falias Raiding Club"
+    ],
+    "cost": {
+      "bmat": 200,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Metal Beam",
+    "nickname": [
+      "Metal Beam"
+    ],
+    "cost": {
+      "bmat": 25,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Radio Backpack",
+    "nickname": [
+      "Radio Backpack"
+    ],
+    "cost": {
+      "bmat": 150,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Sandbag",
+    "nickname": [
+      "Sandbag"
+    ],
+    "cost": {
+      "bmat": 15,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Havoc Charge Detonator",
+    "nickname": [
+      "Havoc Charge Detonator"
+    ],
+    "cost": {
+      "bmat": 75,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 20
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Alligator Charge",
+    "nickname": [
+      "Alligator Charge"
+    ],
+    "cost": {
+      "bmat": 150,
+      "rmat": 0,
+      "emat": 160,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Shovel",
+    "nickname": [
+      "Shovel"
+    ],
+    "cost": {
+      "bmat": 200,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Sledge Hammer",
+    "nickname": [
+      "Sledge Hammer"
+    ],
+    "cost": {
+      "bmat": 200,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Eleos Infantry Dagger",
+    "nickname": [
+      "Eleos Infantry Dagger"
+    ],
+    "cost": {
+      "bmat": 200,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Tripod",
+    "nickname": [
+      "Tripod"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Wind Sock",
+    "nickname": [
+      "Wind Sock"
+    ],
+    "cost": {
+      "bmat": 150,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Wrench",
+    "nickname": [
+      "Wrench"
+    ],
+    "cost": {
+      "bmat": 75,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Water Bucket",
+    "nickname": [
+      "Water Bucket"
+    ],
+    "cost": {
+      "bmat": 80,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Gas Mask",
+    "nickname": [
+      "Gas Mask"
+    ],
+    "cost": {
+      "bmat": 160,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Gas Mask Filter",
+    "nickname": [
+      "Gas Mask Filter"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "The Ospreay",
+    "nickname": [
+      "The Ospreay"
+    ],
+    "cost": {
+      "bmat": 85,
+      "rmat": 10,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Radio",
+    "nickname": [
+      "Radio"
+    ],
+    "cost": {
+      "bmat": 75,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "utilities"
+  },
+  {
+    "itemName": "Bandages",
+    "nickname": [
+      "Bandages"
+    ],
+    "cost": {
+      "bmat": 80,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "medical"
+  },
+  {
+    "itemName": "First Aid Kit",
+    "nickname": [
+      "First Aid Kit"
+    ],
+    "cost": {
+      "bmat": 60,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "medical"
+  },
+  {
+    "itemName": "Trauma Kit",
+    "nickname": [
+      "Trauma Kit"
+    ],
+    "cost": {
+      "bmat": 80,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "medical"
+  },
+  {
+    "itemName": "Blood Plasma",
+    "nickname": [
+      "Blood Plasma"
+    ],
+    "cost": {
+      "bmat": 80,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "medical"
+  },
+  {
+    "itemName": "Soldier Supplies",
+    "nickname": [
+      "Soldier Supplies"
+    ],
+    "cost": {
+      "bmat": 80,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory"
+    ],
+    "itemCategory": "medical"
+  },
+  {
+    "itemName": "Maintenance Supplies",
+    "nickname": [
+      "Maintenance Supplies"
+    ],
+    "cost": {
+      "bmat": 250,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "supplies"
+  },
+  {
+    "itemName": "Leary Shellbore 68mm",
+    "nickname": [
+      "Leary Shellbore 68mm"
+    ],
+    "cost": {
+      "bmat": 450,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "50-500 \u0022Thunderbolt\u0022 Cannon",
+    "nickname": [
+      "50-500 \u0022Thunderbolt\u0022 Cannon"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 585,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "Huber Exalt 150mm",
+    "nickname": [
+      "Huber Exalt 150mm"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 525,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "Leary Snare Trap 127",
+    "nickname": [
+      "Leary Snare Trap 127"
+    ],
+    "cost": {
+      "bmat": 225,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "Huber Lariat 120mm",
+    "nickname": [
+      "Huber Lariat 120mm"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 105,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "Material pallet",
+    "nickname": [
+      "Material pallet"
+    ],
+    "cost": {
+      "bmat": 75,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "Resource Container",
+    "nickname": [
+      "Resource Container"
+    ],
+    "cost": {
+      "bmat": 150,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "Shipping Container",
+    "nickname": [
+      "Shipping Container"
+    ],
+    "cost": {
+      "bmat": 300,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "DAE 1o-3 \u0022Polybolos\u0022",
+    "nickname": [
+      "DAE 1o-3 \u0022Polybolos\u0022"
+    ],
+    "cost": {
+      "bmat": 375,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "DAE 1b-2 \u0022Serra\u0022",
+    "nickname": [
+      "DAE 1b-2 \u0022Serra\u0022"
+    ],
+    "cost": {
+      "bmat": 300,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "Concrete Mixer",
+    "nickname": [
+      "Concrete Mixer"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 225,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "Fuel Container",
+    "nickname": [
+      "Fuel Container"
+    ],
+    "cost": {
+      "bmat": 300,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "shipables"
+  },
+  {
+    "itemName": "r-12 - \u0022Salus\u0022 Ambulance",
+    "nickname": [
+      "r-12 - \u0022Salus\u0022 Ambulance"
+    ],
+    "cost": {
+      "bmat": 450,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Dunne Responder 3e",
+    "nickname": [
+      "Dunne Responder 3e"
+    ],
+    "cost": {
+      "bmat": 450,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "T3 \u0022Xiphos\u0022",
+    "nickname": [
+      "T3 \u0022Xiphos\u0022"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 75,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "O\u0027Brien v.190 Knave",
+    "nickname": [
+      "O\u0027Brien v.190 Knave"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 120,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "O\u0027Brien v.110",
+    "nickname": [
+      "O\u0027Brien v.110"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 75,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "R-15 - \u0022Chariot\u0022",
+    "nickname": [
+      "R-15 - \u0022Chariot\u0022"
+    ],
+    "cost": {
+      "bmat": 300,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Dunne Caravaner 2F",
+    "nickname": [
+      "Dunne Caravaner 2F"
+    ],
+    "cost": {
+      "bmat": 300,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "AA-2 Battering Ram",
+    "nickname": [
+      "AA-2 Battering Ram"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 60,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "G40 \u0022Sagittarii\u0022",
+    "nickname": [
+      "G40 \u0022Sagittarii\u0022"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 60,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "30-250 \u0022Tisiphone\u0022 Field Cannon",
+    "nickname": [
+      "30-250 \u0022Tisiphone\u0022 Field Cannon"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 105,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Noble Widow MK. XIV",
+    "nickname": [
+      "Noble Widow MK. XIV"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 480,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Collins Cannon 68mm",
+    "nickname": [
+      "Collins Cannon 68mm"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 60,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Balfour Wolfhound 40mm",
+    "nickname": [
+      "Balfour Wolfhound 40mm"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 60,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Swallowtail 988/127-2",
+    "nickname": [
+      "Swallowtail 988/127-2"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 60,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Balfour Falconer 250mm",
+    "nickname": [
+      "Balfour Falconer 250mm"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 105,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "BMS - Packmule Flatbed",
+    "nickname": [
+      "BMS - Packmule Flatbed"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 90,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "HH-a \u0022Javelin\u0022",
+    "nickname": [
+      "HH-a \u0022Javelin\u0022"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 165,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Niska Mk. I Gun Motor Carriage",
+    "nickname": [
+      "Niska Mk. I Gun Motor Carriage"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 180,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "AB-8 \u0022Acheron\u0022",
+    "nickname": [
+      "AB-8 \u0022Acheron\u0022"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 60,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "120-68 \u0022Koronides\u0022 Field Gun",
+    "nickname": [
+      "120-68 \u0022Koronides\u0022 Field Gun"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 150,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "HC-2 \u0022Scorpion\u0022",
+    "nickname": [
+      "HC-2 \u0022Scorpion\u0022"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 300,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Mulloy LPC",
+    "nickname": [
+      "Mulloy LPC"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 60,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "H5 \u0022Hatchet\u0022",
+    "nickname": [
+      "H5 \u0022Hatchet\u0022"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 345,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "86K-a \u0022Bardiche\u0022",
+    "nickname": [
+      "86K-a \u0022Bardiche\u0022"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 495,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "90T-v \u0022Nemesis\u0022",
+    "nickname": [
+      "90T-v \u0022Nemesis\u0022"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 450,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "85K-b \u0022Falchion\u0022",
+    "nickname": [
+      "85K-b \u0022Falchion\u0022"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 405,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "03MM \u0022Caster\u0022",
+    "nickname": [
+      "03MM \u0022Caster\u0022"
+    ],
+    "cost": {
+      "bmat": 255,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Devitt Mk. III",
+    "nickname": [
+      "Devitt Mk. III"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 360,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Gallagher Brigand Mk. I",
+    "nickname": [
+      "Gallagher Brigand Mk. I"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 450,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Silverhand - Mk. IV",
+    "nickname": [
+      "Silverhand - Mk. IV"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 465,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Kivela Power Wheel 80-1",
+    "nickname": [
+      "Kivela Power Wheel 80-1"
+    ],
+    "cost": {
+      "bmat": 255,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "UV-05a \u0022Argonaut\u0022",
+    "nickname": [
+      "UV-05a \u0022Argonaut\u0022"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 30,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "T12 \u0022Actaeon\u0022 Tankette",
+    "nickname": [
+      "T12 \u0022Actaeon\u0022 Tankette"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 105,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "King Spire Mk. I",
+    "nickname": [
+      "King Spire Mk. I"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 210,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Drummond 100a",
+    "nickname": [
+      "Drummond 100a"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 30,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Rooster - Junkwagon",
+    "nickname": [
+      "Rooster - Junkwagon"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 30,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "R-1 Hauler",
+    "nickname": [
+      "R-1 Hauler"
+    ],
+    "cost": {
+      "bmat": 300,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "RR-3 \u0022Stolon\u0022 Tanker.",
+    "nickname": [
+      "RR-3 \u0022Stolon\u0022 Tanker."
+    ],
+    "cost": {
+      "bmat": 300,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "R-5 \u0022Atlas\u0022 Hauler",
+    "nickname": [
+      "R-5 \u0022Atlas\u0022 Hauler"
+    ],
+    "cost": {
+      "bmat": 360,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Dunne Fuelrunner 2d",
+    "nickname": [
+      "Dunne Fuelrunner 2d"
+    ],
+    "cost": {
+      "bmat": 300,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Dunne Loadlugger 3c",
+    "nickname": [
+      "Dunne Loadlugger 3c"
+    ],
+    "cost": {
+      "bmat": 360,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Dunne Transport",
+    "nickname": [
+      "Dunne Transport"
+    ],
+    "cost": {
+      "bmat": 300,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "BMS - Aquatipper",
+    "nickname": [
+      "BMS - Aquatipper"
+    ],
+    "cost": {
+      "bmat": 450,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "BMS - Ironship",
+    "nickname": [
+      "BMS - Ironship"
+    ],
+    "cost": {
+      "bmat": 1500,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Type C - \u0022Charon\u0022",
+    "nickname": [
+      "Type C - \u0022Charon\u0022"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 375,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "74b-1 Ronan Gunship",
+    "nickname": [
+      "74b-1 Ronan Gunship"
+    ],
+    "cost": {
+      "bmat": 0,
+      "rmat": 420,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "BMS - Universal Assemly Rig",
+    "nickname": [
+      "BMS - Universal Assemly Rig"
+    ],
+    "cost": {
+      "bmat": 300,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "BMS - Class 2 Mobile Auto-Crane",
+    "nickname": [
+      "BMS - Class 2 Mobile Auto-Crane"
+    ],
+    "cost": {
+      "bmat": 375,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "mpf"
+    ],
+    "itemCategory": "vehicles"
+  },
+  {
+    "itemName": "Velian Flak Vest",
+    "nickname": [
+      "Velian Flak Vest"
+    ],
+    "cost": {
+      "bmat": 200,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Fabri Rucksack",
+    "nickname": [
+      "Fabri Rucksack"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Grenadier\u0027s Baldric",
+    "nickname": [
+      "Grenadier\u0027s Baldric"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Medic Fatigues",
+    "nickname": [
+      "Medic Fatigues"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Officialis\u0027 Attire",
+    "nickname": [
+      "Officialis\u0027 Attire"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Legionary\u0027s Oilcoat",
+    "nickname": [
+      "Legionary\u0027s Oilcoat"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Recon Camo",
+    "nickname": [
+      "Recon Camo"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Heavy Topcoat",
+    "nickname": [
+      "Heavy Topcoat"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Tankman\u0027s Coveralls",
+    "nickname": [
+      "Tankman\u0027s Coveralls"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Specialist\u0027s Overcoat",
+    "nickname": [
+      "Specialist\u0027s Overcoat"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Gunner\u0027s Breastplate",
+    "nickname": [
+      "Gunner\u0027s Breastplate"
+    ],
+    "cost": {
+      "bmat": 150,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Sapper Gear",
+    "nickname": [
+      "Sapper Gear"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Physician\u0027s Jacket",
+    "nickname": [
+      "Physician\u0027s Jacket"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Officer\u0027s Regalia",
+    "nickname": [
+      "Officer\u0027s Regalia"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Outrider\u0027s Mantle",
+    "nickname": [
+      "Outrider\u0027s Mantle"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Caoivish Parka",
+    "nickname": [
+      "Caoivish Parka"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  },
+  {
+    "itemName": "Padded Boiler Suit",
+    "nickname": [
+      "Padded Boiler Suit"
+    ],
+    "cost": {
+      "bmat": 100,
+      "rmat": 0,
+      "emat": 0,
+      "hemat": 0
+    },
+    "craftLocation": [
+      "factory",
+      "mpf"
+    ],
+    "itemCategory": "uniforms"
+  }
+]
