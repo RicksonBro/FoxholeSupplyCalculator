@@ -20,7 +20,7 @@
 8 ящ. - Bandages
 8 ящ. - Soldier Supplies
 200 ящ. – Bmats
-8 ящ. - Physician's Jacket
+10 ящ. - Physician's Jacket
 5 ящ. - Dunne Transport
 5 ящ. - BMS - Packmule Flatbed
 5 ящ. - Swallowtail 988/127-2 (если откроются)

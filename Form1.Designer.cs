@@ -40,6 +40,7 @@ namespace FoxholeSupplyCalculator
         private ContextMenuStrip resultContextMenu;
         private ToolStripMenuItem toolStripMenuItemDelete;
         private ToolStripMenuItem replaceMenuItem;
+        private ToolStripMenuItem replaceSaveItem;
         private Button btnPasteFromClipboard;
         private FlowLayoutPanel panelSubgroups;
         private Button btnApplySubgroupCount;
@@ -79,6 +80,7 @@ namespace FoxholeSupplyCalculator
             contextMenuGrid = new ContextMenuStrip();
             toolStripMenuItemDelete = new ToolStripMenuItem("Удалить");
             replaceMenuItem = new ToolStripMenuItem("Заменить");
+            replaceSaveItem = new ToolStripMenuItem("Заменить и сохранить");
             btnPasteFromClipboard = new Button();
             checkbxEdit = new CheckBox();
             checkbxShowQuota = new CheckBox();
@@ -108,13 +110,15 @@ namespace FoxholeSupplyCalculator
             btnDarkMode.Text = "";
             btnDarkMode.Image = Image.FromFile("img/moon-icon.png");
 
-            txtSearchDB.Location = new Point(12, 50);
-            txtSearchDB.Size = new Size(550, 30);
-            txtSearchDB.PlaceholderText = "🔍Поиск";
+            txtSearchDB.Location = new Point(0, -200);
+            txtSearchDB.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtSearchDB.Size = new Size(300, 30);
+            txtSearchDB.PlaceholderText = "🔍 Поиск";
             txtSearchDB.TextChanged += new System.EventHandler(this.txtSearchDB_TextChanged);
 
 
-            numericSubgroupCount.Location = new Point(170, 302);
+            numericSubgroupCount.Location = new Point(140, -235);
+            numericSubgroupCount.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             numericSubgroupCount.Size = new Size(50, 26);
             numericSubgroupCount.Minimum = 1;
             numericSubgroupCount.Maximum = 100;
@@ -137,16 +141,19 @@ namespace FoxholeSupplyCalculator
 
             // Кнопка "Применить"
             btnApplySubgroupCount = new Button();
-            btnApplySubgroupCount.Location = new Point(230, 300);
+            btnApplySubgroupCount.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnApplySubgroupCount.Location = new Point(numericSubgroupCount.Right + 10, -235);
             btnApplySubgroupCount.Size = new Size(80, 26);
             btnApplySubgroupCount.Name = "btnApplySubgroupCount";
             btnApplySubgroupCount.Text = "Применить";
             btnApplySubgroupCount.Click += new System.EventHandler(this.btnApplySubgroupCount_Click);
 
 
-
             replaceMenuItem.Click += toolStripMenuItemReplace_Click;
             contextMenuGrid.Items.Add(replaceMenuItem);
+
+            replaceSaveItem.Click += toolStripMenuItemReplaceSave_Click;
+            contextMenuGrid.Items.Add(replaceSaveItem);
 
             toolStripMenuItemDelete.Click += toolStripMenuItemDelete_Click;
             dataGridQuotaView.MouseDown += dataGridQuotaView_MouseDown;
@@ -158,9 +165,10 @@ namespace FoxholeSupplyCalculator
 
             // radioFromText.CheckedChanged += radioFromText_CheckedChanged;
             // txtQuotaInput.Visible = false; // Скрываем по умолчанию
-            btnRemoveSubgroup.Location = new Point(10, 300);
+            btnRemoveSubgroup.Location = new Point(10, -240);
+            btnRemoveSubgroup.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             btnRemoveSubgroup.Name = "btnRemoveSubgroup";
-            btnRemoveSubgroup.Size = new Size(20, 20);
+            btnRemoveSubgroup.Size = new Size(60, 30);
             btnRemoveSubgroup.TextAlign = ContentAlignment.MiddleCenter;
             btnRemoveSubgroup.TabIndex = 0;
             btnRemoveSubgroup.Text = "-";
@@ -168,15 +176,17 @@ namespace FoxholeSupplyCalculator
             btnRemoveSubgroup.Click += new System.EventHandler(this.btnRemoveSubgroup_Click);
 
             lblSubgroups.AutoSize = true;
-            lblSubgroups.Location = new Point(30, 305);
+            lblSubgroups.Location = new Point(10, -260);
+            lblSubgroups.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             lblSubgroups.Name = "lblSubgroups";
             lblSubgroups.Size = new Size(125, 13);
             lblSubgroups.TabIndex = 3;
             lblSubgroups.Text = "Кол-во подгрупп:";
 
-            btnAddSubgroup.Location = new Point(130, 300);
+            btnAddSubgroup.Location = new Point(75, -240);
+            btnAddSubgroup.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             btnAddSubgroup.Name = "btnAddSubgroup";
-            btnAddSubgroup.Size = new Size(20, 20);
+            btnAddSubgroup.Size = new Size(60, 30);
             btnAddSubgroup.TextAlign = ContentAlignment.MiddleCenter;
             btnAddSubgroup.TabIndex = 0;
             btnAddSubgroup.Text = "+";
@@ -186,9 +196,7 @@ namespace FoxholeSupplyCalculator
             // 
             // panelSubgroups
             // 
-            // this.panelSubgroups.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)
-            // | AnchorStyles.Left)
-            // | AnchorStyles.Right)));
+            this.panelSubgroups.Dock = DockStyle.Bottom;
             panelSubgroups.AutoScroll = true;
             panelSubgroups.FlowDirection = FlowDirection.TopDown | FlowDirection.LeftToRight;
             panelSubgroups.Location = new Point(12, 330);
@@ -261,7 +269,8 @@ namespace FoxholeSupplyCalculator
             dataGridQuotaView.AllowUserToDeleteRows = false;
             dataGridQuotaView.ReadOnly = false;
             dataGridQuotaView.RowHeadersVisible = false;
-            dataGridQuotaView.Location = new Point(12, 250);
+            dataGridQuotaView.Dock = DockStyle.Bottom;
+            // dataGridQuotaView.Location = new Point(12, 250);
             dataGridQuotaView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridQuotaView.Size = new Size(570, 400);
             dataGridQuotaView.ContextMenuStrip = contextMenuGrid;
@@ -311,8 +320,13 @@ namespace FoxholeSupplyCalculator
             tabControl.Controls.Add(tabDataBase);
             tabControl.Location = new Point(0, 0);
             tabControl.Name = "tabControl";
+            // tabControl.Size = new Size(ClientSize.Width, ClientSize.Height);
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(600, 700);
+            tabControl.Dock = DockStyle.Fill;
+            // tabControl.Margin = new Padding(10);
+            // tabControl.Padding = new Point(5, 6);
+            // tabControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            // tabControl.Size = new Size(600, 700);
 
             // 
             // tabMain
@@ -339,6 +353,7 @@ namespace FoxholeSupplyCalculator
             // btnLoadFile
             // 
             btnLoadFile.Location = new Point(12, 12);
+            btnLoadFile.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             btnLoadFile.Name = "btnLoadFile";
             btnLoadFile.Size = new Size(120, 30);
             btnLoadFile.TabIndex = 0;
@@ -375,15 +390,17 @@ namespace FoxholeSupplyCalculator
             // lstResults
             // 
             lstResults.FormattingEnabled = true;
-            lstResults.Location = new Point(150, 12);
+            lstResults.Location = new Point(-150, -250);
+            lstResults.Anchor = AnchorStyles.Right;
             lstResults.Name = "lstResults";
-            lstResults.Size = new Size(410, 270);
-            lstResults.TabIndex = 4;
+            lstResults.Size = new Size(320, 200);
+            // lstResults.TabIndex = 4;
 
             // 
             // btnAddItem
             // 
             btnAddItem.Location = new Point(12, 12);
+            btnAddItem.Anchor = (AnchorStyles.Top | AnchorStyles.Left);
             btnAddItem.Name = "btnAddItem";
             btnAddItem.Size = new Size(120, 30);
             btnAddItem.Text = "Новый предмет";
@@ -393,7 +410,8 @@ namespace FoxholeSupplyCalculator
             //
             // 
             // btnImportItems
-            btnImportItems.Location = new Point(350, 12);
+            btnImportItems.Location = new Point(-12, 12);
+            btnImportItems.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
             btnImportItems.Name = "btnImportItems";
             btnImportItems.Size = new Size(200, 30);
             btnImportItems.Text = "Импортировать базу данных";
@@ -401,7 +419,8 @@ namespace FoxholeSupplyCalculator
             // 
             // btnDeleteItem
             // 
-            btnDeleteItem.Location = new Point(210, 12);
+            btnDeleteItem.Location = new Point(0, 12);
+            btnDeleteItem.Anchor = (AnchorStyles.Top);
             btnDeleteItem.Name = "btnDeleteItem";
             btnDeleteItem.Size = new Size(120, 30);
             btnDeleteItem.Text = "Удалить предмет";
@@ -423,7 +442,8 @@ namespace FoxholeSupplyCalculator
             // lstItems
             // 
             lstItems.FormattingEnabled = true;
-            lstItems.Location = new Point(12, 80);
+            // lstItems.Location = new Point(12, 80);
+            lstItems.Dock = DockStyle.Bottom;
             lstItems.Name = "lstItems";
             lstItems.Size = new Size(560, 500);
 
@@ -472,8 +492,13 @@ namespace FoxholeSupplyCalculator
 
             // 
             // Form1
-            // 
+
+            AutoSize = true;
             StartPosition = FormStartPosition.CenterScreen;
+            //         this.SetBounds((Screen.GetBounds(this).Width / 2) - (this.Width / 2),
+            //    (Screen.GetBounds(this).Height / 2) - (this.Height / 2),
+            //    this.Width, this.Height, BoundsSpecified.Location);
+            MinimumSize = new Size(600, 700);
             ClientSize = new Size(600, 700);
             Icon = new Icon("img/icon.ico");
             Controls.Add(tabControl);

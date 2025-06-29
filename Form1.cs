@@ -90,17 +90,59 @@ namespace FoxholeSupplyCalculator
                 Anchor = AnchorStyles.Top | AnchorStyles.Right
             };
             percentBox.TextChanged += OnSubgroupTextChanged;
+            percentBox.TextChanged += OnManualPercentChanged;
+
+            var numericPeople = new NumericUpDown
+            {
+                Location = new Point(percentBox.Right + 10, 3),
+                Size = new Size(50, 26),
+                Minimum = 0,
+                Value = 0,
+                Name = "numericPeople",
+                Anchor = AnchorStyles.Top | AnchorStyles.Right
+            };
+            numericPeople.ValueChanged += OnPeopleChanged;
 
             panel.Controls.Add(nameBox);
             panel.Controls.Add(percentBox);
+            panel.Controls.Add(numericPeople);
             panelSubgroups.Controls.Add(panel);
             subgroupTextBoxes.Add(percentBox);
-
+            // Добавляем в список
             subgroups.Add(new SubgroupEntry
             {
                 NameBox = nameBox,
-                PercentBox = percentBox
+                PercentBox = percentBox,
+                PeopleBox = numericPeople,
+                IsManualPercent = false // по умолчанию
             });
+
+            // Обновляем плейсхолдеры после добавления
+            RecalculatePercentPlaceholdersFromPeople();
+        }
+
+
+        private void OnPeopleChanged(object? sender, EventArgs e)
+        {
+            foreach (var s in subgroups)
+                s.IsManualPercent = false; // Сброс флагов ручного ввода процентов
+
+            RecalculatePercentPlaceholdersFromPeople();
+        }
+
+        private void RecalculatePercentPlaceholdersFromPeople()
+        {
+            int totalPeople = subgroups.Sum(entry => (int)entry.PeopleBox.Value);
+
+            if (totalPeople == 0) return;
+
+            foreach (var entry in subgroups)
+            {
+                double percent = (double)entry.PeopleBox.Value / (double)totalPeople * 100.0;
+
+                if (!entry.IsManualPercent)
+                    entry.PercentBox.PlaceholderText = $"{percent:F1}%";
+            }
         }
 
 
@@ -486,47 +528,7 @@ namespace FoxholeSupplyCalculator
 
         private void btnAddSubgroup_Click(object sender, EventArgs e)
         {
-            subgroupCounter++;
-
-            var subgroupPanel = new Panel
-            {
-                Height = 28,
-                Width = panelSubgroups.ClientSize.Width - 25,
-                Margin = new Padding(1),
-                BackColor = Color.Transparent
-            };
-
-            var nameBox = new TextBox
-            {
-                Width = 100,
-                Height = 25,
-                Location = new Point(5, 3),
-                PlaceholderText = $"Подгруппа {subgroupCounter}"
-            };
-
-            var percentBox = new TextBox
-            {
-                Width = 60,
-                Height = 25,
-                Location = new Point(nameBox.Right + 10, 3),
-                PlaceholderText = "25%",
-                Anchor = AnchorStyles.Top | AnchorStyles.Right
-            };
-            percentBox.TextChanged += OnSubgroupTextChanged;
-
-            // Добавляем контролы в панель
-            subgroupPanel.Controls.Add(nameBox);
-            subgroupPanel.Controls.Add(percentBox);
-            panelSubgroups.Controls.Add(subgroupPanel);
-
-            // Добавляем процентный TextBox в список (если ты используешь имя тоже — можно сделать отдельный список или класс)
-            subgroupTextBoxes.Add(percentBox);
-            subgroups.Add(new SubgroupEntry
-            {
-                NameBox = nameBox,
-                PercentBox = percentBox
-            });
-
+            AddSubgroup();
             RecalculatePlaceholders();
         }
 
@@ -586,6 +588,23 @@ namespace FoxholeSupplyCalculator
             isUpdatingPlaceholders = false;
         }
 
+        private void OnManualPercentChanged(object? sender, EventArgs e)
+        {
+            if (sender is TextBox tb)
+            {
+                var entry = subgroups.FirstOrDefault(s => s.PercentBox == tb);
+                if (entry != null)
+                {
+                    entry.IsManualPercent = true;
+
+                    // Сбросить всех людей до 0 (или 1, если минимум 1)
+                    foreach (var s in subgroups)
+                    {
+                        s.PeopleBox.Value = 1;
+                    }
+                }
+            }
+        }
 
 
         private void btnRemoveSubgroup_Click(object sender, EventArgs e)
@@ -735,15 +754,15 @@ namespace FoxholeSupplyCalculator
             }
         }
 
-
-
-        private void ReplaceItemInQuotaText(string oldLine, string newName, int newCrates)
+        private void ReplaceItemInQuotaText(string oldName, string newName, int newCrates)
         {
             string[] lines = quotaText.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             string newLine = $"{newCrates} ящ. - {newName}";
+
             for (int i = 0; i < lines.Length; i++)
             {
-                if (lines[i].Trim() == oldLine.Trim())
+                // Ищем строку, в которой есть старое имя
+                if (lines[i].Contains(oldName))
                 {
                     lines[i] = newLine;
                     break;
@@ -752,14 +771,10 @@ namespace FoxholeSupplyCalculator
 
             quotaText = string.Join("\n", lines);
 
-            // Обновляем текстовое поле, если пользователь вставил текст вручную
             if (txtQuotaInput != null)
-            {
-                txtQuotaInput.Text = quotaText.Replace("\n", "\r\n"); ;
-            }
-
-            // File.WriteAllText(quotaFilePath, quotaText);
+                txtQuotaInput.Text = quotaText.Replace("\n", "\r\n");
         }
+
 
         private void btnDeleteQuota_Click(object sender, EventArgs e)
         {
@@ -831,6 +846,71 @@ namespace FoxholeSupplyCalculator
             }
         }
 
+        private void toolStripMenuItemReplaceSave_Click(object sender, EventArgs e)
+        {
+            if (selectedRow != null)
+            {
+                // 1. Получаем старое имя предмета из Tag
+                string oldItemName = selectedRow.Tag?.ToString();
+                if (string.IsNullOrWhiteSpace(oldItemName)) return;
+
+                // 2. Находим количество ящиков из текущего supplyEntries
+                int previousCrateCount = 0;
+                var existingEntry = supplyEntries.FirstOrDefault(e => e.Name == oldItemName);
+                if (existingEntry != null)
+                {
+                    previousCrateCount = existingEntry.Quantity;
+                }
+
+                // 3. Формируем список предметов для выбора
+                var itemQuotaList = itemDatabase.Select(item => new ItemSelectionForm.ItemQuota
+                {
+                    Name = item.itemName,
+                    CrateCount = previousCrateCount,
+                    SourceItem = item
+                }).ToList();
+
+                ItemSelectionForm selectionForm = new ItemSelectionForm(itemQuotaList);
+                if (selectionForm.ShowDialog() == DialogResult.OK)
+                {
+                    var selectedItem = selectionForm.SelectedItem;
+                    if (selectedItem == null || selectedItem.SourceItem == null)
+                        return;
+
+                    // 4. Обновляем никнеймы: добавляем старое имя, если его ещё нет
+                    if (selectedItem.SourceItem.nickname == null)
+                        selectedItem.SourceItem.nickname = new List<string>();
+
+                    if (!selectedItem.SourceItem.nickname.Any(n => string.Equals(n.Trim(), oldItemName.Trim(), StringComparison.OrdinalIgnoreCase)))
+                    {
+                        selectedItem.SourceItem.nickname.Add(oldItemName);
+                    }
+
+                    // 5. Сохраняем обновлённую базу
+                    string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"items.json");
+                    File.WriteAllText(path, JsonSerializer.Serialize(itemDatabase, new JsonSerializerOptions { WriteIndented = true }));
+
+                    // 6. Обновляем таблицу
+                    selectedRow.Cells[1].Value = selectedItem.Name;
+                    selectedRow.Cells[2].Value = selectedItem.SourceItem.itemName;
+                    selectedRow.Cells[2].Style.ForeColor = Color.Black;
+                    selectedRow.Tag = selectedItem.Name;
+
+                    // 7. Обновляем текст квоты
+                    ReplaceItemInQuotaText(oldItemName, selectedItem.Name, selectedItem.CrateCount);
+
+                    // 8. Обновляем supplyEntries
+                    if (existingEntry != null)
+                    {
+                        existingEntry.Name = selectedItem.Name;
+                        existingEntry.Quantity = selectedItem.CrateCount;
+                    }
+                }
+            }
+        }
+
+
+
         private void toolStripMenuItemDelete_Click(object sender, EventArgs e)
         {
             if (selectedRow != null)
@@ -879,7 +959,6 @@ namespace FoxholeSupplyCalculator
 
         private void LoadQuotaFromText(string text)
         {
-            // Очистка старых данных
             supplyEntries.Clear();
             dataGridQuotaView.Rows.Clear();
 
@@ -887,46 +966,36 @@ namespace FoxholeSupplyCalculator
 
             foreach (string line in lines)
             {
-                line.Replace("–", "-");
-                var match = Regex.Match(line, @"(\d+)\s*ящ\.?\s*[-–]\s*(.+)", RegexOptions.IgnoreCase);
-                if (match.Success)
+                string normalizedLine = line.Replace("–", "-").Replace("—", "-"); // нормализация тире
+
+                var match = Regex.Match(normalizedLine, @"(\d+)\s*ящ\.?\s*-\s*(.+)", RegexOptions.IgnoreCase);
+                if (!match.Success) continue;
+
+                string quantityStr = match.Groups[1].Value.Trim();
+                string name = match.Groups[2].Value.Trim();
+
+                if (!int.TryParse(quantityStr, out int quantity)) continue;
+
+                supplyEntries.Add(new SupplyEntry { Name = name, Quantity = quantity });
+
+                var matched = itemDatabase.FirstOrDefault(item =>
+                    item.nickname?.Any(nick =>
+                        string.Equals(nick.Trim(), name, StringComparison.OrdinalIgnoreCase)) == true);
+
+                string matchedInfo = matched != null ? matched.itemName : "❌ Не найдено";
+
+                bool? showCheckbox = matched?.craftLocation?.Contains("refinery") == true ? false : (bool?)null;
+
+                int rowIndex = dataGridQuotaView.Rows.Add(quantity, name, matchedInfo, showCheckbox);
+                dataGridQuotaView.Rows[rowIndex].Tag = name;
+
+                if (matched == null)
                 {
-                    string quantityStr = match.Groups[1].Value.Trim(); // сначала число
-                    string name = match.Groups[2].Value.Trim();        // потом имя
-
-                    if (int.TryParse(quantityStr, out int quantity))
-                    {
-                        var entry = new SupplyEntry { Name = name, Quantity = quantity };
-                        supplyEntries.Add(entry);
-
-                        var matched = itemDatabase.FirstOrDefault(item =>
-                            item.nickname != null &&
-                            item.nickname.Any(nick =>
-                                string.Equals(nick.Trim(), name.Trim(), StringComparison.OrdinalIgnoreCase)));
-
-                        string quotaInfo = $"{name}";
-                        string matchedInfo = matched != null ? matched.itemName : "❌ Не найдено";
-                        try
-                        {
-                            bool? showCheckbox = matched.craftLocation?.Contains("refinery") == true ? false : (bool?)null;
-
-                            int rowIndex = dataGridQuotaView.Rows.Add(quantity, quotaInfo, matchedInfo, showCheckbox);
-
-                            dataGridQuotaView.Rows[rowIndex].Tag = name;
-
-                            if (matched == null)
-                            {
-                                dataGridQuotaView.Rows[rowIndex].Cells[2].Style.ForeColor = Color.Red;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("Ошибка: ", ex);
-                        }
-                    }
+                    dataGridQuotaView.Rows[rowIndex].Cells[2].Style.ForeColor = Color.Red;
                 }
             }
         }
+
         private void dataGridQuotaView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
             if (e.ColumnIndex == dataGridQuotaView.Columns["SelectColumn"].Index && e.RowIndex >= 0)
@@ -1567,6 +1636,8 @@ namespace FoxholeSupplyCalculator
     {
         public TextBox NameBox { get; set; }
         public TextBox PercentBox { get; set; }
+        public NumericUpDown PeopleBox { get; set; }
+        public bool IsManualPercent { get; set; } = false;
     }
 
 

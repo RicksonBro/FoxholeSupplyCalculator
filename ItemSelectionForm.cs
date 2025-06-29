@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using FoxholeSupplyCalculator;
 
 public partial class ItemSelectionForm : Form
 {
@@ -54,10 +55,12 @@ public partial class ItemSelectionForm : Form
     {
         if (listBox.SelectedItem != null)
         {
-            string selectedLine = listBox.SelectedItem.ToString();
-            // Получаем имя до " — "
-            string selectedName = selectedLine.Split('—')[0].Trim();
-            SelectedItem = items.Find(i => i.Name == selectedName);
+            if (listBox.SelectedIndex >= 0)
+            {
+                SelectedItem = items[listBox.SelectedIndex];
+                DialogResult = DialogResult.OK;
+                Close();
+            }
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -84,6 +87,7 @@ public partial class ItemSelectionForm : Form
         public string Name { get; set; }
         public int Cost { get; set; }
         public int CrateCount { get; set; }
+        public Item? SourceItem { get; set; }
 
     }
 

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FoxholeSupplyCalculator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d5cd034ef7d2d7122523ba4bfaa5a2fc2f3a6cd8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02953c9acb73ce501c4c054f03ca1127262c3e2f")]
 [assembly: System.Reflection.AssemblyProductAttribute("FoxholeSupplyCalculator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FoxholeSupplyCalculator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
