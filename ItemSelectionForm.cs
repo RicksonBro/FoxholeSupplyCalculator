@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using FoxholeSupplyCalculator;
+using System.Linq;
 
 public partial class ItemSelectionForm : Form
 {
@@ -55,31 +56,39 @@ public partial class ItemSelectionForm : Form
     {
         if (listBox.SelectedItem != null)
         {
-            if (listBox.SelectedIndex >= 0)
+            string selectedName = listBox.SelectedItem.ToString()?.Trim();
+
+            // Ищем в items по точному совпадению имени (игнорируя регистр)
+            SelectedItem = items.FirstOrDefault(item =>
+                string.Equals(item.Name, selectedName, StringComparison.OrdinalIgnoreCase));
+
+            if (SelectedItem != null)
             {
-                SelectedItem = items[listBox.SelectedIndex];
                 DialogResult = DialogResult.OK;
                 Close();
             }
-            DialogResult = DialogResult.OK;
-            Close();
         }
     }
+
 
     private void txtSearch_TextChanged(object sender, EventArgs e)
     {
         string search = txtSearch.Text.Trim().ToLower();
-
         listBox.Items.Clear();
 
         foreach (var item in items)
         {
-            if (item.Name.ToLower().Contains(search))
+            // Поиск по имени или SourceItem.nickname
+            bool matchesName = item.Name.ToLower().Contains(search);
+            bool matchesNickname = item.SourceItem?.nickname?.Any(n => n.ToLower().Contains(search)) == true;
+
+            if (matchesName || matchesNickname)
             {
-                listBox.Items.Add($"{item.Name}");
+                listBox.Items.Add(item.Name);
             }
         }
     }
+
 
 
     public class ItemQuota
