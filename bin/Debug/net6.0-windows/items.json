@@ -616,7 +616,8 @@
   {
     "itemName": "9mm SMG",
     "nickname": [
-      "9mm SMG"
+      "9mm SMG",
+      "9 mm."
     ],
     "cost": {
       "bmat": 80,

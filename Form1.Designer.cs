@@ -46,6 +46,7 @@ namespace FoxholeSupplyCalculator
         private FlowLayoutPanel panelSubgroups;
         private Button btnApplySubgroupCount;
         private NumericUpDown numericSubgroupCount;
+        private Button btnAddItemDG;
 
 
         protected override void Dispose(bool disposing)
@@ -96,6 +97,7 @@ namespace FoxholeSupplyCalculator
             copyResultsFromClipboard = new Button();
             btnDeleteQuota = new Button();
             btnReloadDG = new Button();
+            btnAddItemDG = new Button();
             moveItem.Click += MoveItem_Click;
             resultContextMenu.Items.Add(moveItem);
             lstResults.MouseDown += lstResults_MouseDown;
@@ -118,6 +120,14 @@ namespace FoxholeSupplyCalculator
             btnReloadDG.Click += new System.EventHandler(this.btnReloadDG_Click);
             btnReloadDG.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             btnReloadDG.Image = Image.FromFile("img/reload-icon.png");
+
+            btnAddItemDG.Location = new Point(12, -340);
+            btnAddItemDG.Size = new Size(130, 30);
+            btnAddItemDG.Name = "btnAddItemDG";
+            btnAddItemDG.Text = "Добавить предмет";
+            btnAddItemDG.Click += new System.EventHandler(this.btnAddItemDG_Click);
+            btnAddItemDG.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+            // btnAddItemDG.Image = Image.FromFile("img/reload-icon.png");
 
             txtSearchDB.Location = new Point(0, -200);
             txtSearchDB.Anchor = AnchorStyles.Left | AnchorStyles.Right;
@@ -267,7 +277,7 @@ namespace FoxholeSupplyCalculator
             txtQuotaInput.Multiline = true;
             txtQuotaInput.ScrollBars = ScrollBars.Vertical;
             txtQuotaInput.Location = new Point(12, 70);
-            txtQuotaInput.Size = new Size(400, 170);
+            txtQuotaInput.Size = new Size(400, 100);
             txtQuotaInput.ReadOnly = true;
             txtQuotaInput.TextChanged += new System.EventHandler(this.txtQuotaInput_TextChanged);
             txtQuotaInput.Visible = true;
@@ -476,6 +486,7 @@ namespace FoxholeSupplyCalculator
             tabMain.Controls.Add(btnDarkMode);
             tabMain.Controls.Add(btnDeleteQuota);
             tabMain.Controls.Add(btnReloadDG);
+            tabMain.Controls.Add(btnAddItemDG);
             // tabMain.BackgroundImage = newImage;
 
 

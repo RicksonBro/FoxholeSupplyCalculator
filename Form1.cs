@@ -820,6 +820,11 @@ namespace FoxholeSupplyCalculator
 
         private void toolStripMenuItemReplace_Click(object sender, EventArgs e)
         {
+            if (selectedRow.Tag != null && selectedRow.Tag.ToString() == "addRow")
+            {
+                return;
+            }
+
             if (selectedRow != null)
             {
                 // Получаем старое имя предмета из Tag
@@ -876,6 +881,10 @@ namespace FoxholeSupplyCalculator
 
         private void toolStripMenuItemReplaceSave_Click(object sender, EventArgs e)
         {
+            if (selectedRow.Tag != null && selectedRow.Tag.ToString() == "addRow")
+            {
+                return;
+            }
             if (selectedRow != null)
             {
                 // 1. Получаем старое имя предмета из Tag
@@ -941,49 +950,58 @@ namespace FoxholeSupplyCalculator
 
         private void toolStripMenuItemDelete_Click(object sender, EventArgs e)
         {
-            if (selectedRow != null)
+            if (selectedRow?.Tag?.ToString() == "addRow")
+                return;
+
+            if (selectedRow == null)
+                return;
+
+            string itemName = selectedRow.Tag?.ToString();
+            if (string.IsNullOrWhiteSpace(itemName))
+                return;
+
+            if (clickedColumnIndex == 2) // Удалить только найденный предмет
             {
-                if (clickedColumnIndex == 2) // Удалить только найденный предмет
+                selectedRow.Cells[2].Value = "❌ Не найдено";
+                selectedRow.Cells[2].Style.ForeColor = Color.Red;
+                return;
+            }
+
+            // Удаляем строку из DataGridView по имени
+            foreach (DataGridViewRow row in dataGridQuotaView.Rows)
+            {
+                if (row.Tag?.ToString() == itemName)
                 {
-                    selectedRow.Cells[2].Value = "❌ Не найдено";
-                    selectedRow.Cells[2].Style.ForeColor = Color.Red;
-                }
-                else // Удалить всю строку
-                {
-                    string itemName = selectedRow.Tag?.ToString();
-
-                    if (!string.IsNullOrWhiteSpace(itemName))
-                    {
-                        // Удаляем строку из DataGridView
-                        dataGridQuotaView.Rows.Remove(selectedRow);
-                        selectedRow = null;
-
-                        // Удаляем из списка supplyEntries
-                        var entryToRemove = supplyEntries.FirstOrDefault(entry =>
-                            entry.Name != null && entry.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
-
-                        if (entryToRemove != null)
-                        {
-                            supplyEntries.Remove(entryToRemove);
-                        }
-
-                        // Удаляем из текста квоты
-                        string[] lines = quotaText.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-                        string crateLine = $"{entryToRemove?.Quantity} ящ. - {itemName}";
-
-                        quotaText = string.Join("\n", lines
-                            .Where(l => !l.Trim().Equals(crateLine.Trim(), StringComparison.OrdinalIgnoreCase)));
-
-                        // Обновляем текстовое поле, если оно существует
-                        if (txtQuotaInput != null)
-                        {
-                            quotaText += "\n";
-                            txtQuotaInput.Text = quotaText.Replace("\n", "\r\n");
-                        }
-                    }
+                    dataGridQuotaView.Rows.Remove(row);
+                    break;
                 }
             }
+
+            // Удаляем из списка supplyEntries
+            var entryToRemove = supplyEntries.FirstOrDefault(entry =>
+                entry.Name != null && entry.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
+            if (entryToRemove != null)
+            {
+                supplyEntries.Remove(entryToRemove);
+            }
+
+            // Удаляем из текста квоты
+            string[] lines = quotaText.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            string crateLine = $"{entryToRemove?.Quantity} ящ. - {itemName}";
+
+            quotaText = string.Join("\n", lines
+                .Where(l => !l.Trim().Equals(crateLine.Trim(), StringComparison.OrdinalIgnoreCase)));
+
+            // Обновляем текстовое поле
+            if (txtQuotaInput != null)
+            {
+                quotaText += "\n";
+                txtQuotaInput.Text = quotaText.Replace("\n", "\r\n");
+            }
+
+            selectedRow = null;
         }
+
 
 
         private void txtQuotaInput_TextChanged(object sender, EventArgs e)
@@ -1046,11 +1064,16 @@ namespace FoxholeSupplyCalculator
         private void EnsureAddNewRow()
         {
             // Если таблица пуста или последняя строка не "+"
-            if (dataGridQuotaView.Rows.Count == 0 || dataGridQuotaView.Rows[^1].Cells[1].Value?.ToString() != "ДОБАВИТЬ ПРЕДМЕТ")
+            if (dataGridQuotaView.Rows.Count == 0 || dataGridQuotaView.Rows[^1].Cells[0].Value?.ToString() != "+")
             {
                 int rowIndex = dataGridQuotaView.Rows.Add();
                 var row = dataGridQuotaView.Rows[rowIndex];
-                row.Cells[1].Value = "ДОБАВИТЬ ПРЕДМЕТ"; // Ячейка с плюсом
+                DataGridViewCell dc = dataGridQuotaView[1, rowIndex];
+                row.Cells[0].Value = "+";
+                row.Cells[1].Value = "НАЖМИТЕ ЧТОБЫ "; // Ячейка с плюсом
+                dc.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+                row.Cells[2].Value = " ДОБАВИТЬ ПРЕДМЕТ";
+                // row.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 row.DefaultCellStyle.BackColor = Color.LimeGreen;
                 row.ReadOnly = true;
                 row.DefaultCellStyle.ForeColor = Color.White;
@@ -1121,6 +1144,54 @@ namespace FoxholeSupplyCalculator
             else
             {
                 MessageBox.Show("Буфер обмена не содержит текста.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btnAddItemDG_Click(object sender, EventArgs e)
+        {
+            var itemQuotaList = itemDatabase.Select(item => new ItemSelectionForm.ItemQuota
+            {
+                Name = item.itemName,
+                CrateCount = 1,
+                SourceItem = item
+            }).ToList();
+
+            using (var selectionForm = new ItemSelectionForm(itemQuotaList, true))
+            {
+                if (selectionForm.ShowDialog() == DialogResult.OK && selectionForm.SelectedItem != null)
+                {
+                    var selected = selectionForm.SelectedItem;
+
+                    // Удаляем строку с +
+
+                    // Добавляем новый предмет
+                    int newIndex = dataGridQuotaView.Rows.Add(
+                        selected.CrateCount,
+                        selected.Name,
+                        selected.SourceItem?.itemName ?? "❌ Не найдено",
+                        selected.SourceItem?.craftLocation?.Contains("refinery") == true ? false : (bool?)null
+                    );
+
+                    dataGridQuotaView.Rows[newIndex].Tag = selected.Name;
+
+                    // Цвет, если предмет не найден
+                    if (selected.SourceItem == null)
+                    {
+                        dataGridQuotaView.Rows[newIndex].Cells[2].Style.ForeColor = Color.Red;
+                    }
+
+                    // Добавляем в список квоты
+                    supplyEntries.Add(new SupplyEntry
+                    {
+                        Name = selected.Name,
+                        Quantity = selected.CrateCount
+                    });
+                    // quotaText += $"{selected.CrateCount} ящ. - {selected.Name}";
+                    txtQuotaInput.Text += $"{selected.CrateCount} ящ. - {selected.Name}\r\n";
+
+                    // Добавляем снова строку с плюсом
+                    EnsureAddNewRow();
+                }
             }
         }
 
