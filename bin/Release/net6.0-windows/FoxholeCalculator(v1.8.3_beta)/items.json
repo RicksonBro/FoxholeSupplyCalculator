@@ -564,8 +564,7 @@
   {
     "itemName": "Fiddler Submachine Gun Model 868",
     "nickname": [
-      "Fiddler Submachine Gun Model 868",
-      "Fiddler 9mm."
+      "Fiddler Submachine Gun Model 868"
     ],
     "cost": {
       "bmat": 120,
@@ -667,8 +666,7 @@
   {
     "itemName": "12.7mm",
     "nickname": [
-      "12.7mm",
-      "12.7 \u043C\u043C"
+      "12.7mm"
     ],
     "cost": {
       "bmat": 100,
@@ -2194,8 +2192,7 @@
   {
     "itemName": "Swallowtail 988/127-2",
     "nickname": [
-      "Swallowtail 988/127-2",
-      "Swallowtail 988/127-2 (\u0435\u0441\u043B\u0438 \u043E\u0442\u043A\u0440\u043E\u044E\u0442\u0441\u044F)"
+      "Swallowtail 988/127-2"
     ],
     "cost": {
       "bmat": 0,

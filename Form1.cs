@@ -38,6 +38,7 @@ namespace FoxholeSupplyCalculator
             InitializeComponent();
             LoadItemDatabase();
             btnShowItems_Click(null, null);
+            EnsureAddNewRow();
             AllowDrop = true;
             DragEnter += new DragEventHandler(Form1_DragEnter);
             DragDrop += new DragEventHandler(Form1_DragDrop);
@@ -230,7 +231,8 @@ namespace FoxholeSupplyCalculator
                         quotaText = File.ReadAllText(files[0]);
 
                         LoadQuotaFromText(quotaText);
-                        txtQuotaInput.Text = txtQuotaInput.Text = quotaText.Replace("\n", "\r\n"); ; ;
+                        EnsureAddNewRow();
+                        txtQuotaInput.Text = txtQuotaInput.Text = quotaText.Replace("\n", "\r\n") + "\r\n";
                         // Очистка старых данных
                         MessageBox.Show("Файл успешно загружен и квота отображена.");
                     }
@@ -241,6 +243,7 @@ namespace FoxholeSupplyCalculator
                     quotaText = File.ReadAllText(files[0]);
 
                     LoadQuotaFromText(quotaText);
+                    EnsureAddNewRow();
                     txtQuotaInput.Text = quotaText.Replace("\n", "\r\n"); ;
                     // Очистка старых данных
                     MessageBox.Show("Файл успешно загружен и квота отображена.");
@@ -251,6 +254,27 @@ namespace FoxholeSupplyCalculator
             {
                 MessageBox.Show("Ошибка при загрузке: " + ex.Message);
             }
+        }
+
+        private void btnReloadDG_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(quotaText))
+                {
+                    LoadQuotaFromText(quotaText);
+                    EnsureAddNewRow();
+                }
+                else
+                {
+                    MessageBox.Show("Отсутствует текст квоты");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка: ", ex.Message);
+            }
+
         }
 
         private void lstResults_MouseDown(object sender, MouseEventArgs e)
@@ -772,7 +796,10 @@ namespace FoxholeSupplyCalculator
             quotaText = string.Join("\n", lines);
 
             if (txtQuotaInput != null)
+            {
+                quotaText += "\n";
                 txtQuotaInput.Text = quotaText.Replace("\n", "\r\n");
+            }
         }
 
 
@@ -787,6 +814,7 @@ namespace FoxholeSupplyCalculator
             dataGridQuotaView.Rows.Clear();
             supplyEntries.Clear();
             txtQuotaInput.Clear();
+            EnsureAddNewRow();
         }
 
 
@@ -915,20 +943,22 @@ namespace FoxholeSupplyCalculator
         {
             if (selectedRow != null)
             {
-                if (clickedColumnIndex == 2) // Правая колонка — удаляем только найденный предмет
+                if (clickedColumnIndex == 2) // Удалить только найденный предмет
                 {
                     selectedRow.Cells[2].Value = "❌ Не найдено";
                     selectedRow.Cells[2].Style.ForeColor = Color.Red;
                 }
-                else // Левая колонка — удаляем всю строку как раньше
+                else // Удалить всю строку
                 {
                     string itemName = selectedRow.Tag?.ToString();
 
                     if (!string.IsNullOrWhiteSpace(itemName))
                     {
+                        // Удаляем строку из DataGridView
                         dataGridQuotaView.Rows.Remove(selectedRow);
                         selectedRow = null;
 
+                        // Удаляем из списка supplyEntries
                         var entryToRemove = supplyEntries.FirstOrDefault(entry =>
                             entry.Name != null && entry.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase));
 
@@ -936,10 +966,25 @@ namespace FoxholeSupplyCalculator
                         {
                             supplyEntries.Remove(entryToRemove);
                         }
+
+                        // Удаляем из текста квоты
+                        string[] lines = quotaText.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                        string crateLine = $"{entryToRemove?.Quantity} ящ. - {itemName}";
+
+                        quotaText = string.Join("\n", lines
+                            .Where(l => !l.Trim().Equals(crateLine.Trim(), StringComparison.OrdinalIgnoreCase)));
+
+                        // Обновляем текстовое поле, если оно существует
+                        if (txtQuotaInput != null)
+                        {
+                            quotaText += "\n";
+                            txtQuotaInput.Text = quotaText.Replace("\n", "\r\n");
+                        }
                     }
                 }
             }
         }
+
 
         private void txtQuotaInput_TextChanged(object sender, EventArgs e)
         {
@@ -950,11 +995,13 @@ namespace FoxholeSupplyCalculator
             {
                 dataGridQuotaView.Rows.Clear();
                 supplyEntries.Clear();
+                EnsureAddNewRow();
                 return;
             }
 
             quotaText = input; // сохраняем как текущий текст квоты
             LoadQuotaFromText(input);
+            EnsureAddNewRow();
         }
 
         private void LoadQuotaFromText(string text)
@@ -995,6 +1042,23 @@ namespace FoxholeSupplyCalculator
                 }
             }
         }
+
+        private void EnsureAddNewRow()
+        {
+            // Если таблица пуста или последняя строка не "+"
+            if (dataGridQuotaView.Rows.Count == 0 || dataGridQuotaView.Rows[^1].Cells[1].Value?.ToString() != "ДОБАВИТЬ ПРЕДМЕТ")
+            {
+                int rowIndex = dataGridQuotaView.Rows.Add();
+                var row = dataGridQuotaView.Rows[rowIndex];
+                row.Cells[1].Value = "ДОБАВИТЬ ПРЕДМЕТ"; // Ячейка с плюсом
+                row.DefaultCellStyle.BackColor = Color.LimeGreen;
+                row.ReadOnly = true;
+                row.DefaultCellStyle.ForeColor = Color.White;
+                row.DefaultCellStyle.Font = new Font(dataGridQuotaView.Font, FontStyle.Bold);
+                row.Tag = "addRow";
+            }
+        }
+
 
         private void dataGridQuotaView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -1039,17 +1103,19 @@ namespace FoxholeSupplyCalculator
                     if (result == DialogResult.Yes)
                     {
                         string clipboardText = Clipboard.GetText().Replace("\n", "\r\n");
-                        txtQuotaInput.Text = clipboardText;
+                        txtQuotaInput.Text = clipboardText + "\r\n";
                         quotaText = clipboardText;
                         LoadQuotaFromText(quotaText); // функция парсинга и загрузки
+                        EnsureAddNewRow();
                     }
                 }
                 else
                 {
                     string clipboardText = Clipboard.GetText().Replace("\n", "\r\n");
-                    txtQuotaInput.Text = clipboardText;
+                    txtQuotaInput.Text = clipboardText + "\r\n";
                     quotaText = clipboardText;
                     LoadQuotaFromText(quotaText);
+                    EnsureAddNewRow();
                 }
             }
             else
@@ -1057,6 +1123,66 @@ namespace FoxholeSupplyCalculator
                 MessageBox.Show("Буфер обмена не содержит текста.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void dataGridQuotaView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0)
+                return;
+
+            var clickedRow = dataGridQuotaView.Rows[e.RowIndex];
+
+            if (clickedRow.Tag?.ToString() == "addRow")
+            {
+                // Показываем окно выбора предмета
+                var itemQuotaList = itemDatabase.Select(item => new ItemSelectionForm.ItemQuota
+                {
+                    Name = item.itemName,
+                    CrateCount = 1,
+                    SourceItem = item
+                }).ToList();
+
+                using (var selectionForm = new ItemSelectionForm(itemQuotaList, true))
+                {
+                    if (selectionForm.ShowDialog() == DialogResult.OK && selectionForm.SelectedItem != null)
+                    {
+                        var selected = selectionForm.SelectedItem;
+
+                        // Удаляем строку с +
+                        dataGridQuotaView.Rows.RemoveAt(e.RowIndex);
+
+                        // Добавляем новый предмет
+                        int newIndex = dataGridQuotaView.Rows.Add(
+                            selected.CrateCount,
+                            selected.Name,
+                            selected.SourceItem?.itemName ?? "❌ Не найдено",
+                            selected.SourceItem?.craftLocation?.Contains("refinery") == true ? false : (bool?)null
+                        );
+
+                        dataGridQuotaView.Rows[newIndex].Tag = selected.Name;
+
+                        // Цвет, если предмет не найден
+                        if (selected.SourceItem == null)
+                        {
+                            dataGridQuotaView.Rows[newIndex].Cells[2].Style.ForeColor = Color.Red;
+                        }
+
+                        // Добавляем в список квоты
+                        supplyEntries.Add(new SupplyEntry
+                        {
+                            Name = selected.Name,
+                            Quantity = selected.CrateCount
+                        });
+                        // quotaText += $"{selected.CrateCount} ящ. - {selected.Name}";
+                        txtQuotaInput.Text += $"{selected.CrateCount} ящ. - {selected.Name}\r\n";
+
+                        // Добавляем снова строку с плюсом
+                        EnsureAddNewRow();
+                    }
+                }
+            }
+        }
+
+
 
 
         private void LoadItemDatabase()
@@ -1223,7 +1349,8 @@ namespace FoxholeSupplyCalculator
                                 quotaText = File.ReadAllText(ofd.FileName);
 
                                 LoadQuotaFromText(quotaText);
-                                txtQuotaInput.Text = txtQuotaInput.Text = quotaText.Replace("\n", "\r\n"); ; ;
+                                EnsureAddNewRow();
+                                txtQuotaInput.Text = quotaText.Replace("\n", "\r\n") + "\r\n";
                                 // Очистка старых данных
                                 MessageBox.Show("Файл успешно загружен и квота отображена.");
                             }
@@ -1234,7 +1361,8 @@ namespace FoxholeSupplyCalculator
                             quotaText = File.ReadAllText(ofd.FileName);
 
                             LoadQuotaFromText(quotaText);
-                            txtQuotaInput.Text = quotaText.Replace("\n", "\r\n"); ;
+                            EnsureAddNewRow();
+                            txtQuotaInput.Text = quotaText.Replace("\n", "\r\n") + "\r\n";
                             // Очистка старых данных
                             MessageBox.Show("Файл успешно загружен и квота отображена.");
                         }

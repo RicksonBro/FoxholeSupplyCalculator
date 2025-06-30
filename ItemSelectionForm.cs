@@ -8,14 +8,16 @@ using System.Linq;
 public partial class ItemSelectionForm : Form
 {
     private List<ItemQuota> items;
+    private bool isAdd;
     public ItemQuota? SelectedItem { get; private set; }
 
     private ListBox listBox;
     private TextBox txtSearch;
 
-    public ItemSelectionForm(List<ItemQuota> items)
+    public ItemSelectionForm(List<ItemQuota> items, bool isAdd = false)
     {
         this.items = items;
+        this.isAdd = isAdd;
 
         InitializeComponent();
         LoadItems();
@@ -51,21 +53,40 @@ public partial class ItemSelectionForm : Form
         }
     }
 
+    private void selectItemDB()
+    {
+        string selectedName = listBox.SelectedItem.ToString()?.Trim();
+
+        // Ищем в items по точному совпадению имени (игнорируя регистр)
+        SelectedItem = items.FirstOrDefault(item =>
+            string.Equals(item.Name, selectedName, StringComparison.OrdinalIgnoreCase));
+
+        if (SelectedItem != null)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+    }
 
     private void ListBox_DoubleClick(object? sender, EventArgs e)
     {
         if (listBox.SelectedItem != null)
         {
-            string selectedName = listBox.SelectedItem.ToString()?.Trim();
-
-            // Ищем в items по точному совпадению имени (игнорируя регистр)
-            SelectedItem = items.FirstOrDefault(item =>
-                string.Equals(item.Name, selectedName, StringComparison.OrdinalIgnoreCase));
-
-            if (SelectedItem != null)
+            if (isAdd)
             {
-                DialogResult = DialogResult.OK;
-                Close();
+                selectItemDB();
+                return;
+            }
+            DialogResult result = MessageBox.Show(
+                                        $"Заменить старый предмет на {listBox.SelectedItem}?",
+                                        "Предупреждение",
+                                        MessageBoxButtons.YesNo,
+                                        MessageBoxIcon.Question,
+                                        MessageBoxDefaultButton.Button1,
+                                        MessageBoxOptions.DefaultDesktopOnly);
+            if (result == DialogResult.Yes)
+            {
+                selectItemDB();
             }
         }
     }

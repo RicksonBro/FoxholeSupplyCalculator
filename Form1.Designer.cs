@@ -24,6 +24,7 @@ namespace FoxholeSupplyCalculator
         private Button btnRemoveSubgroup;
         private Button copyResultsFromClipboard;
         private Button btnDeleteQuota;
+        private Button btnReloadDG;
 
         private TabControl tabControl;
         private TabPage tabMain;
@@ -94,6 +95,7 @@ namespace FoxholeSupplyCalculator
             var moveItem = new ToolStripMenuItem("Переместить");
             copyResultsFromClipboard = new Button();
             btnDeleteQuota = new Button();
+            btnReloadDG = new Button();
             moveItem.Click += MoveItem_Click;
             resultContextMenu.Items.Add(moveItem);
             lstResults.MouseDown += lstResults_MouseDown;
@@ -109,6 +111,13 @@ namespace FoxholeSupplyCalculator
             btnDarkMode.ImageAlign = ContentAlignment.MiddleCenter;
             btnDarkMode.Text = "";
             btnDarkMode.Image = Image.FromFile("img/moon-icon.png");
+
+            btnReloadDG.Location = new Point(150, -330);
+            btnReloadDG.Size = new Size(25, 25);
+            btnReloadDG.Name = "btnReloadDG";
+            btnReloadDG.Click += new System.EventHandler(this.btnReloadDG_Click);
+            btnReloadDG.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            btnReloadDG.Image = Image.FromFile("img/reload-icon.png");
 
             txtSearchDB.Location = new Point(0, -200);
             txtSearchDB.Anchor = AnchorStyles.Left | AnchorStyles.Right;
@@ -278,6 +287,7 @@ namespace FoxholeSupplyCalculator
             dataGridQuotaView.ScrollBars = ScrollBars.Vertical;
             dataGridQuotaView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
             dataGridQuotaView.AllowUserToAddRows = false;
+            dataGridQuotaView.CellClick += dataGridQuotaView_CellClick;
 
 
             dataGridQuotaView.Columns.Add("Quantity", "Кол-во ящиков");
@@ -465,6 +475,7 @@ namespace FoxholeSupplyCalculator
             tabMain.Controls.Add(checkbxShowQuota);
             tabMain.Controls.Add(btnDarkMode);
             tabMain.Controls.Add(btnDeleteQuota);
+            tabMain.Controls.Add(btnReloadDG);
             // tabMain.BackgroundImage = newImage;
 
 
