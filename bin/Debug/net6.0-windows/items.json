@@ -18,7 +18,7 @@
   {
     "itemName": "\u041F\u0438\u0441\u0442\u043E\u043B\u0435\u0442",
     "nickname": [
-      "\u043F\u0438\u0441\u0442\u043E\u043B\u0435\u0442"
+      "\u043F\u0438\u0444-\u043F\u0430\u0444-\u043F\u0443\u043A"
     ],
     "cost": {
       "bmat": 0,
@@ -28,7 +28,6 @@
     },
     "craftLocation": [
       "mpf",
-      "factory",
       "refinery"
     ],
     "itemCategory": "small_arms"
@@ -87,8 +86,7 @@
   {
     "itemName": "7.92mm",
     "nickname": [
-      "7.92mm",
-      "7.92 \u043C\u043C"
+      "7.92mm"
     ],
     "cost": {
       "bmat": 120,

@@ -18,7 +18,7 @@
   {
     "itemName": "\u041F\u0438\u0441\u0442\u043E\u043B\u0435\u0442",
     "nickname": [
-      "\u043F\u0438\u0441\u0442\u043E\u043B\u0435\u0442"
+      "\u043F\u0438\u0444-\u043F\u0430\u0444-\u043F\u0443\u043A"
     ],
     "cost": {
       "bmat": 0,
@@ -28,7 +28,6 @@
     },
     "craftLocation": [
       "mpf",
-      "factory",
       "refinery"
     ],
     "itemCategory": "small_arms"
@@ -563,7 +562,8 @@
   {
     "itemName": "Fiddler Submachine Gun Model 868",
     "nickname": [
-      "Fiddler Submachine Gun Model 868"
+      "Fiddler Submachine Gun Model 868",
+      "Fiddler 9mm."
     ],
     "cost": {
       "bmat": 120,
@@ -614,7 +614,8 @@
   {
     "itemName": "9mm SMG",
     "nickname": [
-      "9mm SMG"
+      "9mm SMG",
+      "9 mm."
     ],
     "cost": {
       "bmat": 80,
@@ -665,7 +666,8 @@
   {
     "itemName": "12.7mm",
     "nickname": [
-      "12.7mm"
+      "12.7mm",
+      "12.7 \u043C\u043C"
     ],
     "cost": {
       "bmat": 100,
@@ -2191,7 +2193,8 @@
   {
     "itemName": "Swallowtail 988/127-2",
     "nickname": [
-      "Swallowtail 988/127-2"
+      "Swallowtail 988/127-2",
+      "Swallowtail 988/127-2 (\u0435\u0441\u043B\u0438 \u043E\u0442\u043A\u0440\u043E\u044E\u0442\u0441\u044F)"
     ],
     "cost": {
       "bmat": 0,

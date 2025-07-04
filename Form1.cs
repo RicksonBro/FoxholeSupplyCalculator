@@ -535,6 +535,77 @@ namespace FoxholeSupplyCalculator
             }
         }
 
+        private void toolStripItemsEdit_Click(object sender, EventArgs e)
+        {
+            if (lstItems.SelectedItem == null) return;
+
+            string selectedText = lstItems.SelectedItem.ToString()?.Trim();
+            if (string.IsNullOrWhiteSpace(selectedText)) return;
+
+            int endOfId = selectedText.IndexOf("]") + 1;
+            int startOfNicks = selectedText.LastIndexOf("(");
+
+            if (endOfId <= 0 || startOfNicks == -1 || startOfNicks <= endOfId)
+            {
+                MessageBox.Show("Не удалось извлечь имя предмета.");
+                return;
+            }
+
+            string selected = selectedText.Substring(endOfId, startOfNicks - endOfId).Trim();
+
+            // Найти сам объект item в базе по itemName или nickname
+            var itemToEdit = itemDatabase.FirstOrDefault(i =>
+                i.itemName.Equals(selected, StringComparison.OrdinalIgnoreCase) ||
+                (i.nickname != null && i.nickname.Any(n =>
+                    n.Equals(selected, StringComparison.OrdinalIgnoreCase)))
+            );
+
+            if (itemToEdit == null)
+            {
+                MessageBox.Show("Не удалось найти предмет в базе данных.");
+                return;
+            }
+
+            // Открыть окно редактирования
+            using (var editForm = new EditItemForm(itemToEdit))
+            {
+                if (editForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Предмет уже отредактирован по ссылке — обновляем файл
+                    SaveItemDatabaseToJson();
+
+                    // Обновить отображение (если нужно вручную)
+                    // например, если у тебя в listBox не auto-refresh
+                }
+            }
+            LoadItemDatabase();
+            btnShowItems_Click(null, null);
+        }
+
+
+
+        private void SaveItemDatabaseToJson()
+        {
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                };
+
+                string json = JsonSerializer.Serialize(itemDatabase, options);
+                File.WriteAllText("items.json", json);
+                LoadItemDatabase();
+                btnShowItems_Click(null, null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при сохранении JSON:\n" + ex.Message);
+            }
+        }
+
+
+
         // Вспомогательный метод: получить имя подгруппы по индексу
         private string GetSubgroupNameByIndex(int index)
         {

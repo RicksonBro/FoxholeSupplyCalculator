@@ -18,7 +18,6 @@ namespace FoxholeSupplyCalculator
         private ListBox lstResults;
         private Button btnAddItem;
         private ListBox lstItems;
-        private Button btnDeleteItem;
         private Button btnSaveResults;
         private Button btnAddSubgroup;
         private Button btnRemoveSubgroup;
@@ -39,6 +38,9 @@ namespace FoxholeSupplyCalculator
         private DataGridView dataGridQuotaView;
         private ContextMenuStrip contextMenuGrid;
         private ContextMenuStrip resultContextMenu;
+        private ContextMenuStrip lstItemsMenu;
+        private ToolStripMenuItem toolStripItemsDelete;
+        private ToolStripMenuItem toolStripItemsEdit;
         private ToolStripMenuItem toolStripMenuItemDelete;
         private ToolStripMenuItem replaceMenuItem;
         private ToolStripMenuItem replaceSaveItem;
@@ -68,7 +70,6 @@ namespace FoxholeSupplyCalculator
             lstResults = new ListBox();
             btnAddItem = new Button();
             lstItems = new ListBox();
-            btnDeleteItem = new Button();
             btnSaveResults = new Button();
             tabControl = new TabControl();
             tabMain = new TabPage();
@@ -80,6 +81,9 @@ namespace FoxholeSupplyCalculator
             lblCurrentQuota = new Label();
             dataGridQuotaView = new DataGridView();
             contextMenuGrid = new ContextMenuStrip();
+            lstItemsMenu = new ContextMenuStrip();
+            toolStripItemsDelete = new ToolStripMenuItem("Удалить");
+            toolStripItemsEdit = new ToolStripMenuItem("Редактировать");
             toolStripMenuItemDelete = new ToolStripMenuItem("Удалить");
             replaceMenuItem = new ToolStripMenuItem("Заменить");
             replaceSaveItem = new ToolStripMenuItem("Заменить и сохранить");
@@ -99,7 +103,12 @@ namespace FoxholeSupplyCalculator
             btnReloadDG = new Button();
             btnAddItemDG = new Button();
             moveItem.Click += MoveItem_Click;
+            toolStripItemsDelete.Click += btnDeleteItem_Click;
+            toolStripItemsEdit.Click += toolStripItemsEdit_Click;
             resultContextMenu.Items.Add(moveItem);
+            lstItemsMenu.Items.Add(toolStripItemsDelete);
+
+            lstItemsMenu.Items.Add(toolStripItemsEdit);
             lstResults.MouseDown += lstResults_MouseDown;
 
             lstResults.ContextMenuStrip = resultContextMenu;
@@ -129,8 +138,8 @@ namespace FoxholeSupplyCalculator
             btnAddItemDG.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
             // btnAddItemDG.Image = Image.FromFile("img/reload-icon.png");
 
-            txtSearchDB.Location = new Point(0, -200);
-            txtSearchDB.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtSearchDB.Location = new Point(0, -421);
+            txtSearchDB.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
             txtSearchDB.Size = new Size(300, 30);
             txtSearchDB.PlaceholderText = "🔍 Поиск";
             txtSearchDB.TextChanged += new System.EventHandler(this.txtSearchDB_TextChanged);
@@ -430,8 +439,8 @@ namespace FoxholeSupplyCalculator
             //
             // 
             // btnImportItems
-            btnImportItems.Location = new Point(-12, 12);
-            btnImportItems.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+            btnImportItems.Location = new Point(150, 12);
+            btnImportItems.Anchor = (AnchorStyles.Left | AnchorStyles.Top);
             btnImportItems.Name = "btnImportItems";
             btnImportItems.Size = new Size(200, 30);
             btnImportItems.Text = "Импортировать базу данных";
@@ -439,12 +448,6 @@ namespace FoxholeSupplyCalculator
             // 
             // btnDeleteItem
             // 
-            btnDeleteItem.Location = new Point(0, 12);
-            btnDeleteItem.Anchor = (AnchorStyles.Top);
-            btnDeleteItem.Name = "btnDeleteItem";
-            btnDeleteItem.Size = new Size(120, 30);
-            btnDeleteItem.Text = "Удалить предмет";
-            btnDeleteItem.Click += new System.EventHandler(btnDeleteItem_Click);
 
 
             btnSaveResults.Location = new Point(12, 120);
@@ -462,6 +465,7 @@ namespace FoxholeSupplyCalculator
             // lstItems
             // 
             lstItems.FormattingEnabled = true;
+            lstItems.ContextMenuStrip = lstItemsMenu;
             // lstItems.Location = new Point(12, 80);
             lstItems.Dock = DockStyle.Bottom;
             lstItems.Name = "lstItems";
@@ -493,7 +497,6 @@ namespace FoxholeSupplyCalculator
             //tabDataBase Controls
 
             tabDataBase.Controls.Add(btnAddItem);
-            tabDataBase.Controls.Add(btnDeleteItem);
             tabDataBase.Controls.Add(btnImportItems);
             tabDataBase.Controls.Add(txtSearchDB);
             tabDataBase.Controls.Add(lstItems);

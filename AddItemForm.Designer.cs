@@ -67,7 +67,7 @@ namespace FoxholeSupplyCalculator
             this.lstCraftLocations.CheckOnClick = true;
 
             this.cmbProdBranch.Location = new System.Drawing.Point(12, 270);
-            this.cmbProdBranch.Items.AddRange(new string[] { "small_arms", "heavy_arms", "heavy_ammunition", "utilities", "medical", "supplies", "shipables", "vehicles", "uniforms", "none" });
+            this.cmbProdBranch.Items.AddRange(new string[] { "none", "small_arms", "heavy_arms", "heavy_ammunition", "utilities", "medical", "supplies", "shipables", "vehicles", "uniforms" });
             this.cmbProdBranch.DropDownStyle = ComboBoxStyle.DropDownList;
             this.cmbProdBranch.SelectedIndex = 0;
 
